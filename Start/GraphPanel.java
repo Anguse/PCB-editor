@@ -20,7 +20,7 @@ public class GraphPanel extends JComponent {
 					if(nodeColor==Color.BLACK)
 						graph.add(new GridNode(1), mousePoint);
 					else
-						graph.add(new GridNode(2), mousePoint);
+						graph.add(new GridNode(6), mousePoint);
 				}
 				repaint();
 			}

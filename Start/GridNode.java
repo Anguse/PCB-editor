@@ -12,16 +12,16 @@ public class GridNode {
 		size = DEFAULT_SIZE;
 		color = DEFAULT_COLOR;
 		for(int i = 0; i < rows; i++){
-			nodes.add(new CircleNode(x+20,y-10*i,DEFAULT_SIZE/20,Color.CYAN));
-			nodes.add(new CircleNode(x,y-10*i,DEFAULT_SIZE/20,Color.CYAN));
+			nodes.add(new CircleNode(x-DEFAULT_SIZE/4,y+10*(i+1),DEFAULT_SIZE/4,Color.CYAN));
+			nodes.add(new CircleNode(x+20,y+10*(i+1),DEFAULT_SIZE/4,Color.CYAN));
 		}
 	}
 	
 	public Rectangle2D getBounds(){
-		return new Rectangle2D.Double(x, y, size, size+10*nodes.size());
+		return new Rectangle2D.Double(x, y, size, size+5*(nodes.size()-1));
 	}
 	public void draw(Graphics2D g){
-		Rectangle2D rectangle = new Rectangle2D.Double(x,y,size,size+10*nodes.size());
+		Rectangle2D rectangle = getBounds();
 		Color oldColor = g.getColor();
 		g.setColor(color);
 		g.fill(rectangle);
