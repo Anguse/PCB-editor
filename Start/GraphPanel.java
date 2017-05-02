@@ -20,12 +20,18 @@ public class GraphPanel extends JComponent {
 				int y = event.getY() - (event.getY()%40);
 				mousePoint.setLocation(x,y);
 				Color nodeColor = toolBar.getSelectedCircleNodeColor();
-				if (nodeColor != null) {
-					if(nodeColor==Color.BLACK){
-						graph.add(new GridNode(1), mousePoint);
+				if (nodeColor != null) {	//finds the color getSelectedCircleColor() returned.
+					if(nodeColor==Color.BLACK){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
+						graph.add(new GridNode(1), mousePoint);	//.. and expand function of the buttons.
+					}
+					else if(nodeColor==Color.WHITE){
+						graph.add(new GridNode(6), mousePoint);
+					}
+					else if(nodeColor==Color.BLUE){
+						graph.add(new GridNode(2), mousePoint);
 					}
 					else{
-						graph.add(new GridNode(6), mousePoint);
+						toolBar.buttonAction(aGraph);	//Test 4th button.
 					}
 				}
 				repaint();

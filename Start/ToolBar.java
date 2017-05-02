@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class ToolBar extends JPanel {
 
-	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE };
+	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE, Color.YELLOW};
 
 	public ToolBar(CircleGraph graph) {
 		group = new ButtonGroup();
@@ -18,7 +18,7 @@ public class ToolBar extends JPanel {
 	public Color getSelectedCircleNodeColor() {
 		Enumeration<AbstractButton> e = group.getElements();
 		int i = 0;
-		while (e.hasMoreElements()) {
+		while (e.hasMoreElements()) {	//Iterates to find what button is selected by checking the button Color.
 			JToggleButton button = (JToggleButton) e.nextElement();
 			if (button.isSelected())
 				return nodeColors[i];
@@ -56,10 +56,22 @@ public class ToolBar extends JPanel {
 		group.add(button);
 		add(button);
 	}
+	
+	public void buttonAction(CircleGraph aGraph){	//Checks what button is pressed and execute desired function.
+		setBackground(Color.WHITE);
+
+		Color nodeColor = this.getSelectedCircleNodeColor();
+		if(nodeColor== Color.YELLOW){
+			//TODO: Add functionality.
+			System.out.println("Button is working!");	//For testing.
+			aGraph.saveComponents("test");
+			
+		}
+	}
 
 	private ButtonGroup group;
 
-	private static final int BUTTON_SIZE = 20;
+	private static final int BUTTON_SIZE = 10;	//Original size: 20
 	private static final int OFFSET = 4;
 }
 
