@@ -2,6 +2,7 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -20,10 +21,12 @@ public class GraphPanel extends JComponent {
 				mousePoint.setLocation(x,y);
 				Color nodeColor = toolBar.getSelectedCircleNodeColor();
 				if (nodeColor != null) {
-					if(nodeColor==Color.BLACK)
+					if(nodeColor==Color.BLACK){
 						graph.add(new GridNode(1), mousePoint);
-					else
+					}
+					else{
 						graph.add(new GridNode(6), mousePoint);
+					}
 				}
 				repaint();
 			}
