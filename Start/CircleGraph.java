@@ -25,7 +25,7 @@ public class CircleGraph {
 
 	public void draw(Graphics2D g2) {
 		for(GridNode n : gNodes)
-			n.draw(g2);
+			n.paintComponent(g2);
 		for (CircleNode n : nodes)
 			n.draw(g2);
 	}
