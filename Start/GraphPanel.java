@@ -15,6 +15,9 @@ public class GraphPanel extends JComponent {
 		addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent event) {
 				Point2D mousePoint = event.getPoint();
+				int x = event.getX() - (event.getX()%30);
+				int y = event.getY() - (event.getY()%40);
+				mousePoint.setLocation(x,y);
 				Color nodeColor = toolBar.getSelectedCircleNodeColor();
 				if (nodeColor != null) {
 					if(nodeColor==Color.BLACK)
