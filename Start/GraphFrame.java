@@ -13,10 +13,11 @@ public class GraphFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		CircleGraph graph = new CircleGraph();
-
 		toolBar = new ToolBar(graph);
 		panel = new GraphPanel(toolBar, graph);
 		scrollPane = new JScrollPane(panel);
+		scrollPane.getViewport().setBackground(Color.WHITE);
+
 		this.add(toolBar, BorderLayout.NORTH);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
