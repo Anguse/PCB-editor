@@ -15,15 +15,15 @@ public class GridNode extends JComponent{
 			nodes.add(new CircleNode(getX()+20,getY()+10*(i+1),DEFAULT_SIZE/4,Color.CYAN));
 		}
 	}
-	public void paintComponent(Graphics2D g){
+	public void paint(Graphics g){
 		Rectangle2D rectangle = getBounds();
 		Color oldColor = g.getColor();
 		g.setColor(color);
-		g.fill(rectangle);
-		g.setColor(oldColor);
-		g.draw(rectangle);
+		((Graphics2D)g).fill(rectangle);
+		((Graphics2D)g).setColor(oldColor);
+		((Graphics2D)g).draw(rectangle);
 		for(CircleNode n : nodes){
-			n.draw(g);
+			n.draw((Graphics2D)g);
 		}	
 	}
 	public void translate(double dx,double dy){

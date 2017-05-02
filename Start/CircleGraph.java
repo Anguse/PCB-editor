@@ -7,38 +7,30 @@ import java.util.List;
 public class CircleGraph {
 
 	public CircleGraph() {
-		nodes = new ArrayList<CircleNode>();
-		gNodes = new ArrayList<GridNode>();
+		components = new ArrayList<Component>();
 	}
 
-	public void add(CircleNode n, Point2D p) {
-		Rectangle2D bounds = n.getBounds();
-		n.translate(p.getX() - bounds.getX(),p.getY() - bounds.getY());
-		nodes.add(n);
-	}
 	
+	public void add(Component c, Point2D p){
+		Rectangle2D bounds = c.getBounds();
+		c.move((int)(p.getX() - bounds.getX()),(int)( p.getY() - bounds.getY()));
+		components.add(c);
+	}
 	public void add(GridNode n, Point2D p){
 		Rectangle2D bounds = n.getBounds();
 		n.translate(p.getX() - bounds.getX(), p.getY() - bounds.getY());
-		gNodes.add(n);
+		components.add(n);
 	}
 
 	public void draw(Graphics2D g2) {
-		for(GridNode n : gNodes)
-			n.paintComponent(g2);
-		for (CircleNode n : nodes)
-			n.draw(g2);
-	}
-
-	public List<CircleNode> getNodes() {
-		return nodes;
+		for(Component c : components)
+			c.paint(g2);
 	}
 	
-	public List<GridNode> get_gNodes() {
-		return gNodes;
+	public List<Component> getComponents() {
+		return components;
 	}
 
-	private ArrayList<CircleNode> nodes;
-	private ArrayList<GridNode> gNodes;
+	private ArrayList<Component> components;
 }
 
