@@ -2,6 +2,7 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
@@ -31,7 +32,15 @@ public class GraphPanel extends JComponent {
 						graph.add(new GridNode(2), mousePoint);
 					}
 					else{
-						toolBar.buttonAction(aGraph);	//Test 4th button.
+						try {
+							toolBar.buttonAction(aGraph);
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}	//Test 4th button.
 					}
 				}
 				repaint();

@@ -2,12 +2,13 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.IOException;
 import java.util.*;
 import javax.swing.*;
 
 public class ToolBar extends JPanel {
 
-	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE, Color.YELLOW};
+	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE, Color.YELLOW, Color.ORANGE};
 
 	public ToolBar(CircleGraph graph) {
 		group = new ButtonGroup();
@@ -57,7 +58,7 @@ public class ToolBar extends JPanel {
 		add(button);
 	}
 	
-	public void buttonAction(CircleGraph aGraph){	//Checks what button is pressed and execute desired function.
+	public void buttonAction(CircleGraph aGraph) throws ClassNotFoundException, IOException{	//Checks what button is pressed and execute desired function.
 		setBackground(Color.WHITE);
 
 		Color nodeColor = this.getSelectedCircleNodeColor();
@@ -65,6 +66,10 @@ public class ToolBar extends JPanel {
 			//TODO: Add functionality.
 			System.out.println("Button is working!");	//For testing.
 			aGraph.saveComponents("disco");	
+		} else if(nodeColor == Color.ORANGE){
+			ArrayList<Component> loadable = aGraph.loadComponents("disco.dat");
+			aGraph.loadComponentArray(loadable);
+			repaint();
 			
 		}
 	}
