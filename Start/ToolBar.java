@@ -64,7 +64,7 @@ public class ToolBar extends JPanel {
 		if(nodeColor== Color.YELLOW){
 			//TODO: Add functionality.
 			System.out.println("Button is working!");	//For testing.
-			aGraph.saveComponents("test");
+			aGraph.saveComponents("disco");	
 			
 		}
 	}

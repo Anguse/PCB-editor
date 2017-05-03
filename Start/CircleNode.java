@@ -2,11 +2,16 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.Serializable;
 
 /**
  * A circular node that is filled with a color.
  */
-public class CircleNode {
+public class CircleNode implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6316363996010354681L;
 	public CircleNode(Color aColor) {
 		size = DEFAULT_SIZE;
 		x = 0;

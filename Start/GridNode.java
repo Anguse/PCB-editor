@@ -2,11 +2,16 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-public class GridNode extends JComponent{
+public class GridNode extends JComponent implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3735539464503062041L;
 	public GridNode(int rows){
 		setBounds(0,0,DEFAULT_SIZE,DEFAULT_SIZE+10*(rows-1));
 		color = DEFAULT_COLOR;
