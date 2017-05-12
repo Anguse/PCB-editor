@@ -19,12 +19,18 @@ public class ActionBar extends JPanel implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String[] IMG_PATHS = {	"C:\\Users\\Felix\\workspace\\CircuitBoardProject\\src\\Start\\saveIcon.png",
-												"C:\\Users\\Felix\\workspace\\CircuitBoardProject\\src\\Start\\openIcon.png"};
+	private static final String[] IMG_PATHS = {	"src\\saveIcon.png",
+												"src\\openIcon.png"};
 	private static final String[] IMG_PATHS_NAME = {"SAVE", "OPEN"};
 	
 	private ButtonGroup group;
 	private CircleGraph bGraph;
+	private GraphPanel gPanel;
+	
+	/**ActionBar produces buttons that have standard functions as
+	 * save and load.
+	 * @param CircleGraph graph, used to manipulate the CircleGraph class used.
+	 * */
 	
 	public ActionBar(CircleGraph graph) {
 		bGraph = graph;
@@ -42,19 +48,13 @@ public class ActionBar extends JPanel implements Serializable{
 		      }
 		}
 	}
-
-	public String getSelectedAction() {
-		Enumeration<AbstractButton> e = group.getElements();
-		int i = 0;
-		while (e.hasMoreElements()) {	//Iterates to find what button is selected by checking the button Color.
-			JToggleButton button = (JToggleButton) e.nextElement();
-			if (button.isSelected())
-				return IMG_PATHS_NAME[i];
-			i++;
-		}
-		return null;
-	}
-
+	
+	
+	/* Adds a button with the chosen icon.
+	 * Icons are stored in the src folder and the method
+	 * access them by using a String array with the path.
+	 * The amount of paths AND icons determines how many
+	 * buttons are added.*/
 	public void add(final ImageIcon  n) {
 		JButton button = new JButton();
 		
@@ -62,35 +62,36 @@ public class ActionBar extends JPanel implements Serializable{
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				try {
-					Enumeration<AbstractButton> e = group.getElements();
-					String buttonName = "";
-					int i = 0;
-					while (e.hasMoreElements()) {	//Iterates to find what button is selected by checking the button Color.
-						JButton button = (JButton) e.nextElement();
-						if (button == event.getSource()){
-							buttonName = IMG_PATHS_NAME[i];
-						}
-						i++;
+				Enumeration<AbstractButton> e = group.getElements();
+				String buttonName = "";
+				int i = 0;
+				while (e.hasMoreElements()) {	//Iterates to find what button is selected by checking the button Color.
+					JButton button = (JButton) e.nextElement();
+					if (button == event.getSource()){
+						buttonName = IMG_PATHS_NAME[i];
 					}
-					System.out.print(buttonName);
-					if(buttonName == "SAVE"){
-						//TODO: Add functionality.
-						System.out.println("Button is working!");	//For testing.
-						bGraph.saveComponents("testfile");	
-					} else if(buttonName == "OPEN"){
-						System.out.println("Button is working2!");	//For testing.
-						bGraph.loadComponents("testfile.dat");
-						repaint();
-					}
-				} catch (ClassNotFoundException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					i++;
+				}
+				System.out.print(buttonName);
+				if(buttonName == "SAVE"){
+					//TODO: Add functionality.
+					SaveFrame save = new SaveFrame(bGraph);
+				} else if(buttonName == "OPEN"){
+					//bGraph.loadComponents("testfile.dat");
+					LoadFrame load = new LoadFrame(bGraph, gPanel);
+					gPanel.repaint();
 				}
 			}
 		});
 		group.add(button);
 		add(button);
+	}
+	
+	/* Used by GraphPanel to give this class access to the GraphPanel.
+	 * This is done so ActionBar class can call repaint() to
+	 * construct the loaded data.*/
+	public void setGraphPanel(GraphPanel g){
+		gPanel = g;
 	}
 	
 

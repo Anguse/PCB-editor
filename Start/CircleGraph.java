@@ -48,7 +48,7 @@ public class CircleGraph implements Serializable{
 	public void saveComponents(String filename){
 		ArrayList<JComponent> saveObject = (ArrayList<JComponent>) this.getComponents();
 		SaveObject savable = new SaveObject(saveObject);
-		String file = filename + ".dat";
+		String file = "src\\"+filename + ".dat";
 		
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
@@ -62,7 +62,7 @@ public class CircleGraph implements Serializable{
 	/*Loads the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
 	public void loadComponents(String filepath) throws IOException, ClassNotFoundException{
-		ObjectInputStream in = new ObjectInputStream (new FileInputStream (filepath));
+		ObjectInputStream in = new ObjectInputStream (new FileInputStream ("src\\"+filepath));
 		SaveObject savable = (SaveObject) in.readObject();
 		ArrayList<JComponent> saveObject = savable.getInfo();
 		in.close();
