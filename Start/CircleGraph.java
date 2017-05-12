@@ -11,24 +11,25 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
+import javax.swing.JComponent;
+
 public class CircleGraph implements Serializable{
 
 	private static final long serialVersionUID = -6757559296850264270L;
 
 	public CircleGraph() {
-		components = new ArrayList<Component>();
+		components = new ArrayList<JComponent>();
 	}
 
 	
-	@SuppressWarnings("deprecation")
-	public void add(Component c, Point2D p){
+	public void add(JComponent c, Point2D p){
 		Rectangle2D bounds = c.getBounds();
-		c.move((int)(p.getX() - bounds.getX()),(int)( p.getY() - bounds.getY()));
+		c.setLocation((int)(p.getX() - bounds.getX()),(int)( p.getY() - bounds.getY()));
 		components.add(c);
 	}
 	public void add(GridNode n, Point2D p){
 		Rectangle2D bounds = n.getBounds();
-		n.translate(p.getX() - bounds.getX(), p.getY() - bounds.getY());
+		n.vectorMove((double)(p.getX() - bounds.getX()),(double)( p.getY() - bounds.getY()));
 		components.add(n);
 	}
 
@@ -37,7 +38,7 @@ public class CircleGraph implements Serializable{
 			c.paint(g2);
 	}
 	
-	public List<Component> getComponents() {
+	public List<JComponent> getComponents() {
 		return components;
 	}
 	
@@ -45,7 +46,7 @@ public class CircleGraph implements Serializable{
 	 * TODO: Thoroughly testing to makes sure components are recreatable and saves correctly
 	 * No more exception, .dat file is created. Have to test it by adding load function.*/
 	public void saveComponents(String filename){
-		ArrayList<Component> saveObject = (ArrayList<Component>) this.getComponents();
+		ArrayList<JComponent> saveObject = (ArrayList<JComponent>) this.getComponents();
 		SaveObject savable = new SaveObject(saveObject);
 		String file = filename + ".dat";
 		
@@ -60,19 +61,19 @@ public class CircleGraph implements Serializable{
 	}
 	/*Loads the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
-	public ArrayList<Component> loadComponents(String filepath) throws IOException, ClassNotFoundException{
+	public ArrayList<JComponent> loadComponents(String filepath) throws IOException, ClassNotFoundException{
 		ObjectInputStream in = new ObjectInputStream (new FileInputStream (filepath));
 		SaveObject savable = (SaveObject) in.readObject();
-		ArrayList<Component> saveObject = savable.getInfo();
+		ArrayList<JComponent> saveObject = savable.getInfo();
 		in.close();
 		return saveObject;
 	}
 	/**Changes the component array to the loaded objects component array.
 	 * Used to store loaded files information.*/
-	public void loadComponentArray(ArrayList<Component> loadable){
+	public void loadComponentArray(ArrayList<JComponent> loadable){
 		components = loadable;
 	}
 
-	private ArrayList<Component> components;
+	private ArrayList<JComponent> components;
 }
 

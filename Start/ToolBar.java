@@ -67,7 +67,7 @@ public class ToolBar extends JPanel {
 			System.out.println("Button is working!");	//For testing.
 			aGraph.saveComponents("disco");	
 		} else if(nodeColor == Color.ORANGE){
-			ArrayList<Component> loadable = aGraph.loadComponents("disco.dat");
+			ArrayList<JComponent> loadable = aGraph.loadComponents("disco.dat");
 			aGraph.loadComponentArray(loadable);
 			repaint();
 			

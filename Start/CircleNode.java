@@ -4,30 +4,29 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.io.Serializable;
 
+import javax.swing.JComponent;
+
 /**
  * A circular node that is filled with a color.
  */
-public class CircleNode implements Serializable{
+public class CircleNode extends JComponent implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6316363996010354681L;
-	public CircleNode(Color aColor) {
+	public CircleNode(Color color) {
 		size = DEFAULT_SIZE;
-		x = 0;
-		y = 0;
-		color = aColor;
-	}
-	
-	public CircleNode(double x, double y, int size, Color color){
+		setLocation(0,0);
 		this.color = color;
+	}
+	public CircleNode(int x, int y, double size, Color color){
 		this.size = size;
-		this.x = x;
-		this.y = y;
+		setLocation(x,y);
+		this.color = color;
 	}
 
 	public void draw(Graphics2D g2) {
-		Ellipse2D circle = new Ellipse2D.Double(x, y, size, size);
+		Ellipse2D circle = new Ellipse2D.Double(getX(), getY(), size, size);
 		Color oldColor = g2.getColor();
 		g2.setColor(color);
 		g2.fill(circle);
@@ -35,18 +34,7 @@ public class CircleNode implements Serializable{
 		g2.draw(circle);
 	}
 
-	public void translate(double dx, double dy) {
-		x += dx;
-		y += dy;
-	}
-
-	public Rectangle2D getBounds() {
-		return new Rectangle2D.Double(x, y, size, size);
-	}
-
-	private double x;
-	private double y;
 	private double size;
 	private Color color;
-	private static final int DEFAULT_SIZE = 20;
+	private static final int DEFAULT_SIZE = 5;
 }

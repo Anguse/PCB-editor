@@ -8,17 +8,21 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class GraphPanel extends JComponent {
+	private volatile JComponent clickedComponent;
 
 	public GraphPanel(ToolBar aToolBar, CircleGraph aGraph) {
 		toolBar = aToolBar;
 		graph = aGraph;
 		setBackground(Color.WHITE);
-
-		addMouseListener(new MouseAdapter() {
+		addMouseListener(new MouseListener() {
 			public void mousePressed(MouseEvent event) {
-				Point2D mousePoint = event.getPoint();
+				Point mousePoint = event.getPoint();
 				int x = event.getX() - (event.getX()%30);
-				int y = event.getY() - (event.getY()%40);
+				int y = event.getY() - (event.getY()%20);
+				clickedComponent = getComponentAt(mousePoint); 
+				if(clickedComponent!=null){
+					return;
+				}
 				mousePoint.setLocation(x,y);
 				Color nodeColor = toolBar.getSelectedCircleNodeColor();
 				if (nodeColor != null) {	//finds the color getSelectedCircleColor() returned.
@@ -45,7 +49,63 @@ public class GraphPanel extends JComponent {
 				}
 				repaint();
 			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				clickedComponent = null;
+				
+			}
+
 		});
+		addMouseMotionListener(new MouseMotionListener() {
+
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				int x = e.getX() - (e.getX()%30);
+				int y = e.getY() - (e.getY()%20);
+				Point mousePoint = new Point(x,y);
+				
+				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
+					System.out.println("drag");
+					((GridNode) clickedComponent).vectorMove(x-clickedComponent.getX(),y-clickedComponent.getY());
+					repaint();
+				}
+			}
+		});
+	}
+	/**Returns the component which contains @param point, if it exists.
+	 * Else null*/
+	public JComponent getComponentAt(Point point){
+		for(JComponent component : graph.getComponents()){
+			if(component.getBounds().contains(point)){
+				return component;
+			}
+		}
+		return null;
 	}
 
 	public void paintComponent(Graphics g) {
