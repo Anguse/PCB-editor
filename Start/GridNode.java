@@ -37,6 +37,9 @@ public class GridNode extends JComponent implements Serializable{
 			((CircleNode)component).draw((Graphics2D)g);
 		}	
 	}
+	/**
+	 * Moves the GridNode and all its components in the direction @param dx, @param dy 
+	 * */
 	public void vectorMove(double dx, double dy){
 		setLocation((int)(getLocation().getX()+dx),(int)(getLocation().getY()+dy));
 		for(Component component : getComponents()){
