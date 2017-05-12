@@ -10,7 +10,9 @@ import javax.swing.*;
 public class GraphPanel extends JComponent {
 	private volatile JComponent clickedComponent;
 
-	public GraphPanel(ToolBar aToolBar, CircleGraph aGraph) {
+	public GraphPanel(ToolBar aToolBar, ActionBar aActionBar, CircleGraph aGraph) {
+		
+		actionBar = aActionBar;
 		toolBar = aToolBar;
 		graph = aGraph;
 		setBackground(Color.WHITE);
@@ -34,17 +36,6 @@ public class GraphPanel extends JComponent {
 					}
 					else if(nodeColor==Color.BLUE){
 						graph.add(new GridNode(2), mousePoint);
-					}
-					else{
-						try {
-							toolBar.buttonAction(aGraph);
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}	//Test 4th button.
 					}
 				}
 				repaint();
@@ -115,4 +106,5 @@ public class GraphPanel extends JComponent {
 
 	private CircleGraph graph;
 	private ToolBar toolBar;
+	private ActionBar actionBar;
 }

@@ -61,16 +61,17 @@ public class CircleGraph implements Serializable{
 	}
 	/*Loads the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
-	public ArrayList<JComponent> loadComponents(String filepath) throws IOException, ClassNotFoundException{
+	public void loadComponents(String filepath) throws IOException, ClassNotFoundException{
 		ObjectInputStream in = new ObjectInputStream (new FileInputStream (filepath));
 		SaveObject savable = (SaveObject) in.readObject();
 		ArrayList<JComponent> saveObject = savable.getInfo();
 		in.close();
-		return saveObject;
+		loadComponentArray(saveObject);
+		
 	}
 	/**Changes the component array to the loaded objects component array.
 	 * Used to store loaded files information.*/
-	public void loadComponentArray(ArrayList<JComponent> loadable){
+	private void loadComponentArray(ArrayList<JComponent> loadable){
 		components = loadable;
 	}
 
