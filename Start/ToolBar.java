@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class ToolBar extends JPanel {
 
-	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE, Color.YELLOW, Color.ORANGE};
+	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE};
 
 	public ToolBar(CircleGraph graph) {
 		group = new ButtonGroup();
@@ -58,21 +58,7 @@ public class ToolBar extends JPanel {
 		add(button);
 	}
 	
-	public void buttonAction(CircleGraph aGraph) throws ClassNotFoundException, IOException{	//Checks what button is pressed and execute desired function.
-		setBackground(Color.WHITE);
 
-		Color nodeColor = this.getSelectedCircleNodeColor();
-		if(nodeColor== Color.YELLOW){
-			//TODO: Add functionality.
-			System.out.println("Button is working!");	//For testing.
-			aGraph.saveComponents("disco");	
-		} else if(nodeColor == Color.ORANGE){
-			ArrayList<JComponent> loadable = aGraph.loadComponents("disco.dat");
-			aGraph.loadComponentArray(loadable);
-			repaint();
-			
-		}
-	}
 
 	private ButtonGroup group;
 
