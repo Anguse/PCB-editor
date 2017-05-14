@@ -33,7 +33,9 @@ public class CircleNode extends JComponent implements Serializable{
 		g2.setColor(oldColor);
 		g2.draw(circle);
 	}
-
+	public void vectorMove(double dx,double dy){
+		setLocation((int)(getX()+dy),(int)(getY()+dy));
+	}
 	private double size;
 	private Color color;
 	private static final int DEFAULT_SIZE = 5;
