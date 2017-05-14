@@ -32,6 +32,7 @@ public class GraphPanel extends JComponent {
 				if (nodeColor != null) {	//finds the color getSelectedCircleColor() returned.
 					if(nodeColor==Color.BLACK){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
 						GridNode newNode = new GridNode(1);
+						mousePoint = adjustToOffset(newNode, mousePoint);
 						graph.add(newNode, mousePoint);	//.. and expand function of the buttons.
 						adjustToFrame(newNode);
 					}
@@ -69,7 +70,6 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("height: "+getParent().getHeight()+" width: " + getParent().getWidth());
 				clickedComponent = null;
 				
 			}
@@ -85,8 +85,8 @@ public class GraphPanel extends JComponent {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				Point mousePoint = snapToGrid(e.getPoint());
+				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
-					System.out.println("drag");
 					if(inFrame((GridNode)clickedComponent,mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY())==true){
 						((GridNode) clickedComponent).vectorMove(mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY());	
 						repaint();
@@ -115,6 +115,15 @@ public class GraphPanel extends JComponent {
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * Adjusts @param point from top left corner, to middle of @param component
+	 * @return Adjusted point
+	 * */
+	public Point adjustToOffset(Component component, Point point){
+		point.x-=component.getWidth()/2;
+		point.y-=component.getHeight()/2;
+		return point;
 	}
 	/**
 	 * Adjusts component to GraphPanels parent
