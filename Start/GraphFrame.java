@@ -15,10 +15,11 @@ public class GraphFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		CircleGraph graph = new CircleGraph();
+		pMenu = new ComponentPopMenu(graph);
 		cList = new ComponentList(graph);
 		toolBar = new ToolBar(graph);
 		actionBar = new ActionBar(graph);
-		panel = new GraphPanel(cList, actionBar, graph);
+		panel = new GraphPanel(cList,pMenu, actionBar, graph);
 		scrollPane = new JScrollPane(panel);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		
@@ -33,6 +34,7 @@ public class GraphFrame extends JFrame {
 	private ToolBar toolBar;
 	private ActionBar actionBar;
 	private ComponentList cList;
+	private ComponentPopMenu pMenu;
 
 	public static final int FRAME_WIDTH = 600;
 	public static final int FRAME_HEIGHT = 400;

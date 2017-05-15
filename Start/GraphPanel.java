@@ -13,8 +13,12 @@ public class GraphPanel extends JComponent {
 	 */
 	private static final long serialVersionUID = 1L;
 	private volatile JComponent clickedComponent;
+	private GraphPanel mThis = this;
 
-	public GraphPanel(ComponentList cList, ActionBar aActionBar, CircleGraph aGraph) {
+	public GraphPanel(ComponentList cList,ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
+		
+		popMenu = pMenu;
+		jPopMenu = pMenu.getMenu();
 		actionBar = aActionBar;
 		componentList = cList;
 		graph = aGraph;
@@ -25,6 +29,7 @@ public class GraphPanel extends JComponent {
 				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
 				clickedComponent = getComponentAt(mousePoint); 
+				jPopMenu.setVisible(false);
 				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event)){
 					return;
 				}
@@ -37,42 +42,52 @@ public class GraphPanel extends JComponent {
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 						}
+						newNode.setComponentPopupMenu(jPopMenu);
 					}
 					else if(componentIndex==1){
 						newNode = new GridNode(4, componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 						}
+						newNode.setComponentPopupMenu(jPopMenu);
 					}
 					else if(componentIndex==2){
 						newNode = new GridNode(6, componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 						}
+						newNode.setComponentPopupMenu(jPopMenu);
 					}
 					else if(componentIndex==3){
 						newNode = new GridNode(8, componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 						}
+						newNode.setComponentPopupMenu(jPopMenu);
 					}
 					else if(componentIndex==4){
 						newNode = new GridNode(componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 						}
+						newNode.setComponentPopupMenu(jPopMenu);
 					}
 					else if(componentIndex==5){
 						newNode = new GridNode(componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 						}
+						newNode.setComponentPopupMenu(jPopMenu);
 					}
 				} else if(SwingUtilities.isRightMouseButton(event)){
 					System.out.print("right click");
 					newNode = (GridNode) getComponentAt(mousePoint);
 					if(newNode != null){
-						graph.removeComponent(newNode);
+						//graph.removeComponent(newNode);
+						newNode.getComponentPopupMenu().setLocation(mousePoint);
+						newNode.getComponentPopupMenu().setVisible(true);
+						popMenu.selectComponent(newNode);
+						popMenu.externalRepaint(mThis);
 					}
 				}
 				clickedComponent = newNode;
@@ -209,4 +224,6 @@ public class GraphPanel extends JComponent {
 	private CircleGraph graph;
 	private ComponentList componentList;
 	private ActionBar actionBar;
+	private ComponentPopMenu popMenu;
+	private JPopupMenu jPopMenu;
 }
