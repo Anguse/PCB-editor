@@ -12,6 +12,7 @@ public class GraphFrame extends JFrame {
 
 	public GraphFrame() {
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		CircleGraph graph = new CircleGraph();
@@ -34,6 +35,6 @@ public class GraphFrame extends JFrame {
 	private ActionBar actionBar;
 	private ComponentList cList;
 
-	public static final int FRAME_WIDTH = 600;
-	public static final int FRAME_HEIGHT = 400;
+	public static final int FRAME_WIDTH = 1200;
+	public static final int FRAME_HEIGHT = 800;
 }

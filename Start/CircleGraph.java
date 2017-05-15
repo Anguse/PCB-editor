@@ -62,7 +62,7 @@ public class CircleGraph implements Serializable{
 	/*Loads the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
 	public void loadComponents(String filepath) throws IOException, ClassNotFoundException{
-		ObjectInputStream in = new ObjectInputStream (new FileInputStream ("src\\"+filepath));
+		ObjectInputStream in = new ObjectInputStream (new FileInputStream ("src\\"+filepath+".dat"));
 		SaveObject savable = (SaveObject) in.readObject();
 		ArrayList<JComponent> saveObject = savable.getInfo();
 		in.close();

@@ -19,16 +19,17 @@ public class GridNode extends JComponent implements Serializable{
 	private static final long serialVersionUID = -3735539464503062041L;
 
 	public GridNode(int rows, String text){
+		x=0;y=0;
 		this.rows = rows;
-		setBounds(0,0,DEFAULT_SIZE,DEFAULT_SIZE+10*(rows-1));
+		setBounds(0-DEFAULT_OFFSET/2,0,DEFAULT_SIZE+DEFAULT_OFFSET,DEFAULT_SIZE+10*(rows-1));
 		color = DEFAULT_COLOR;
 		tooltip = text;
 		setToolTipText(text);
 		for(int i = 0; i < rows; i++){
-			CircleNode newNode = new CircleNode(getX()-5, getY()+10*(i+1),5,Color.CYAN); 
+			CircleNode newNode = new CircleNode(x-5, y+10*(i+1),5,Color.CYAN); 
 			add(newNode);
 			nodes.add(newNode);
-			newNode = new CircleNode(getX()+20, getY()+10*(i+1),5,Color.CYAN);
+			newNode = new CircleNode(x+20, y+10*(i+1),5,Color.CYAN);
 			add(newNode);
 			nodes.add(newNode);
 		}
@@ -37,22 +38,24 @@ public class GridNode extends JComponent implements Serializable{
 	/* This constructor creates a GridNode with set size and uneven amount of
 	 * pins (2 and 1).*/
 	public GridNode(String text){
-		this.rows = 2;
-		setBounds(0,0,DEFAULT_SIZE,DEFAULT_SIZE+10*(rows-1));
+		x=0;y=0;
+		rows = 2;
+		setBounds(0-DEFAULT_OFFSET/2,0,DEFAULT_SIZE+DEFAULT_OFFSET,DEFAULT_SIZE+10*(rows-1));
 		color = DEFAULT_COLOR;
 		tooltip = text;
 		setToolTipText(text);
 		for(int i = 0; i < rows; i++){
-			CircleNode newNode = new CircleNode(getX()-5, getY()+10*(i+1),5,Color.CYAN); 
+			CircleNode newNode = new CircleNode(x-5, y+10*(i+1),5,Color.CYAN); 
 			add(newNode);
 			nodes.add(newNode);
 		}
-		CircleNode newNode = new CircleNode(getX()+20, getY()+15,5,Color.CYAN);
+		CircleNode newNode = new CircleNode(x+20, y+15,5,Color.CYAN);
 		add(newNode);
 		nodes.add(newNode);
+		
 	}
 	public void paint(Graphics g){
-		Rectangle2D rectangle = getBounds();
+		Rectangle2D rectangle = new Rectangle(x, y, DEFAULT_SIZE, DEFAULT_SIZE+10*(rows-1));
 		Color oldColor = g.getColor();
 		g.setColor(color);
 		((Graphics2D)g).fill(rectangle);
@@ -69,12 +72,14 @@ public class GridNode extends JComponent implements Serializable{
 	 * Moves the GridNode and all its components in the direction @param dx, @param dy 
 	 * */
 	public void vectorMove(double dx, double dy){
+		x+=dx;y+=dy;
 		setLocation((int)(getLocation().getX()+dx),(int)(getLocation().getY()+dy));
 		for(Component component : getComponents()){
 			component.setLocation((int)(component.getLocation().getX()+dx),(int)(component.getLocation().getY()+dy));
 		}
 	}
 	public void moveTo(double x, double y){
+		this.x=(int)x;this.y=(int)y;
 		setLocation((int)x,(int)y);
 		for(CircleNode node : getNodes()){
 			node.vectorMove(x-getX(), y-getY());
@@ -83,8 +88,9 @@ public class GridNode extends JComponent implements Serializable{
 	public ArrayList<CircleNode> getNodes(){
 		return nodes;
 	}
-	
+	private int x,y;
 	private Color color;
+	private static final int DEFAULT_OFFSET = 10;
 	private static final int DEFAULT_SIZE = 20;
 	private Color DEFAULT_COLOR = Color.GREEN;
 	private ArrayList<CircleNode> nodes = new ArrayList<CircleNode>();

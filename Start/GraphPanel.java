@@ -22,6 +22,9 @@ public class GraphPanel extends JComponent {
 		setBackground(Color.WHITE);
 		addMouseListener(new MouseListener() {
 			public void mousePressed(MouseEvent event){
+				getParent().getParent().setSize(900, 600);
+				getParent().setSize(900,600);
+				System.out.println(getParent().getWidth()+"  "+getParent().getHeight());
 				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
 				clickedComponent = getComponentAt(mousePoint); 
@@ -198,7 +201,7 @@ public class GraphPanel extends JComponent {
 	 * @return Point p, adjusted to the grid
 	 * */
 	private Point snapToGrid(Point p){
-		//p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
+		p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
 		return p;
 	}
 	public void paintComponent(Graphics g) {
