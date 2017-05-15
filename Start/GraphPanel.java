@@ -14,22 +14,27 @@ public class GraphPanel extends JComponent {
 	private static final long serialVersionUID = 1L;
 	private volatile JComponent clickedComponent;
 
+/**<<<<<<< HEAD
 	public GraphPanel(ToolBar aToolBar, ActionBar aActionBar, CircleGraph aGraph) {
 
+=======*/
+	public GraphPanel(ComponentList cList, ActionBar aActionBar, CircleGraph aGraph) {
+		
+//>>>>>>> e601cfa8034948e797af01af7c861b2ef4dd26ad
 		actionBar = aActionBar;
-		toolBar = aToolBar;
+		componentList = cList;
 		graph = aGraph;
 		actionBar.setGraphPanel(this);
 		setBackground(Color.WHITE);
 		addMouseListener(new MouseListener() {
-			public void mousePressed(MouseEvent event) {
-				//FIX stuff
+			public void mousePressed(MouseEvent event){
 				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
 				clickedComponent = getComponentAt(mousePoint); 
-				if(clickedComponent!=null){
+				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event)){
 					return;
 				}
+/**<<<<<<< HEAD
 				Color nodeColor = toolBar.getSelectedCircleNodeColor();
 				if (nodeColor != null) {	//finds the color getSelectedCircleColor() returned.
 					if(nodeColor==Color.BLACK){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
@@ -52,7 +57,56 @@ public class GraphPanel extends JComponent {
 						}
 					}
 					clickedComponent = newNode;
+=======**/
+				int componentIndex = componentList.getIndex();
+				String componentName = componentList.getComponentName();
+				if (SwingUtilities.isLeftMouseButton(event)) {
+					if(componentIndex==0){
+						newNode = new GridNode(1, componentName);
+						mousePoint = adjustToOffset(newNode, mousePoint);
+						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							graph.add(newNode, mousePoint);
+						}
+					}
+					else if(componentIndex==1){
+						newNode = new GridNode(4, componentName);
+						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							graph.add(newNode, mousePoint);
+						}
+					}
+					else if(componentIndex==2){
+						newNode = new GridNode(6, componentName);
+						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							graph.add(newNode, mousePoint);
+						}
+					}
+					else if(componentIndex==3){
+						newNode = new GridNode(8, componentName);
+						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							graph.add(newNode, mousePoint);
+						}
+					}
+					else if(componentIndex==4){
+						newNode = new GridNode(componentName);
+						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							graph.add(newNode, mousePoint);
+						}
+					}
+					else if(componentIndex==5){
+						newNode = new GridNode(componentName);
+						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							graph.add(newNode, mousePoint);
+						}
+					}
+				} else if(SwingUtilities.isRightMouseButton(event)){
+					System.out.print("right click");
+					newNode = (GridNode) getComponentAt(mousePoint);
+					if(newNode != null){
+						graph.removeComponent(newNode);
+					}
+//>>>>>>> e601cfa8034948e797af01af7c861b2ef4dd26ad
 				}
+				clickedComponent = newNode;
 				repaint();
 			}
 
@@ -184,6 +238,6 @@ public class GraphPanel extends JComponent {
 	}
 
 	private CircleGraph graph;
-	private ToolBar toolBar;
+	private ComponentList componentList;
 	private ActionBar actionBar;
 }
