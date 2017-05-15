@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 
 public class GridNode extends JComponent implements Serializable{
 	/**
@@ -33,6 +34,8 @@ public class GridNode extends JComponent implements Serializable{
 		}
 	}
 	
+	/* This constructor creates a GridNode with set size and uneven amount of
+	 * pins (2 and 1).*/
 	public GridNode(String text){
 		this.rows = 2;
 		setBounds(0,0,DEFAULT_SIZE,DEFAULT_SIZE+10*(rows-1));

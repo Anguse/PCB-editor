@@ -25,16 +25,16 @@ public class GraphPanel extends JComponent {
 			public void mousePressed(MouseEvent event) {
 				Point mousePoint = snapToGrid(event.getPoint());
 				clickedComponent = getComponentAt(mousePoint); 
-				if(clickedComponent!=null){
+				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event)){
 					return;
 				}
 				int componentIndex = componentList.getIndex();
 				String componentName = componentList.getComponentName();
-				if (true) {	//finds the color getSelectedCircleColor() returned.
-					if(componentIndex==0){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
+				if (SwingUtilities.isLeftMouseButton(event)) {
+					if(componentIndex==0){
 						GridNode newNode = new GridNode(1, componentName);
 						mousePoint = adjustToOffset(newNode, mousePoint);
-						graph.add(newNode, mousePoint);	//.. and expand function of the buttons.
+						graph.add(newNode, mousePoint);
 						adjustToFrame(newNode);
 					}
 					else if(componentIndex==1){
@@ -61,6 +61,12 @@ public class GraphPanel extends JComponent {
 						GridNode newNode = new GridNode(componentName);
 						graph.add(newNode, mousePoint);
 						adjustToFrame(newNode);
+					}
+				} else if(SwingUtilities.isRightMouseButton(event)){
+					System.out.print("right click");
+					GridNode newNode = (GridNode) getComponentAt(mousePoint);
+					if(newNode != null){
+						graph.removeComponent(newNode);
 					}
 				}
 				repaint();
