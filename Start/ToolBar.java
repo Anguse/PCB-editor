@@ -9,6 +9,7 @@ import javax.swing.*;
 public class ToolBar extends JPanel {
 
 	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE};
+	private String[] names = {"AND", "OR", "NOT"};
 
 	public ToolBar(CircleGraph graph) {
 		group = new ButtonGroup();
@@ -21,8 +22,9 @@ public class ToolBar extends JPanel {
 		int i = 0;
 		while (e.hasMoreElements()) {	//Iterates to find what button is selected by checking the button Color.
 			JToggleButton button = (JToggleButton) e.nextElement();
-			if (button.isSelected())
+			if (button.isSelected()){
 				return nodeColors[i];
+			}
 			i++;
 		}
 		return null;

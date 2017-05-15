@@ -33,6 +33,7 @@ public class GridNode extends JComponent implements Serializable{
 			add(newNode);
 			nodes.add(newNode);
 		}
+		
 	}
 	
 	/* This constructor creates a GridNode with set size and uneven amount of

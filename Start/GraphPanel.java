@@ -28,14 +28,15 @@ public class GraphPanel extends JComponent {
 			public void mousePressed(MouseEvent event){
 				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
-				clickedComponent = getComponentAt(mousePoint); 
+				clickedComponent = getComponentAt(mousePoint);
+				//System.out.print(clickedComponent);
 				jPopMenu.setVisible(false);
-				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event)){
+				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()){
 					return;
 				}
 				int componentIndex = componentList.getIndex();
 				String componentName = componentList.getComponentName();
-				if (SwingUtilities.isLeftMouseButton(event)) {
+				if (SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()) {
 					if(componentIndex==0){
 						newNode = new GridNode(1, componentName);
 						mousePoint = adjustToOffset(newNode, mousePoint);
@@ -89,6 +90,12 @@ public class GraphPanel extends JComponent {
 						popMenu.selectComponent(newNode);
 						popMenu.externalRepaint(mThis);
 					}
+				} else if(event.isControlDown()){
+					System.out.print("here");
+					newNode = (GridNode) getComponentAt(mousePoint);
+					if(newNode != null){
+						graph.removeComponent(newNode);
+					}
 				}
 				clickedComponent = newNode;
 				repaint();
@@ -128,6 +135,9 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
+				if(e.isControlDown()){
+					return;
+				}
 				Point mousePoint = snapToGrid(e.getPoint());
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
