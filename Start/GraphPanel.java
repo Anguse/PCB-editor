@@ -14,10 +14,10 @@ public class GraphPanel extends JComponent {
 	private static final long serialVersionUID = 1L;
 	private volatile JComponent clickedComponent;
 
-	public GraphPanel(ToolBar aToolBar, ActionBar aActionBar, CircleGraph aGraph) {
+	public GraphPanel(ComponentList cList, ActionBar aActionBar, CircleGraph aGraph) {
 		
 		actionBar = aActionBar;
-		toolBar = aToolBar;
+		componentList = cList;
 		graph = aGraph;
 		actionBar.setGraphPanel(this);
 		setBackground(Color.WHITE);
@@ -28,21 +28,37 @@ public class GraphPanel extends JComponent {
 				if(clickedComponent!=null){
 					return;
 				}
-				Color nodeColor = toolBar.getSelectedCircleNodeColor();
-				if (nodeColor != null) {	//finds the color getSelectedCircleColor() returned.
-					if(nodeColor==Color.BLACK){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
-						GridNode newNode = new GridNode(1);
+				int componentIndex = componentList.getIndex();
+				String componentName = componentList.getComponentName();
+				if (true) {	//finds the color getSelectedCircleColor() returned.
+					if(componentIndex==0){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
+						GridNode newNode = new GridNode(1, componentName);
 						mousePoint = adjustToOffset(newNode, mousePoint);
 						graph.add(newNode, mousePoint);	//.. and expand function of the buttons.
 						adjustToFrame(newNode);
 					}
-					else if(nodeColor==Color.WHITE){
-						GridNode newNode = new GridNode(6);
+					else if(componentIndex==1){
+						GridNode newNode = new GridNode(4, componentName);
 						graph.add(newNode, mousePoint);
 						adjustToFrame(newNode);
 					}
-					else if(nodeColor==Color.BLUE){
-						GridNode newNode = new GridNode(2);
+					else if(componentIndex==2){
+						GridNode newNode = new GridNode(6, componentName);
+						graph.add(newNode, mousePoint);
+						adjustToFrame(newNode);
+					}
+					else if(componentIndex==3){
+						GridNode newNode = new GridNode(8, componentName);
+						graph.add(newNode, mousePoint);
+						adjustToFrame(newNode);
+					}
+					else if(componentIndex==4){
+						GridNode newNode = new GridNode(componentName);
+						graph.add(newNode, mousePoint);
+						adjustToFrame(newNode);
+					}
+					else if(componentIndex==5){
+						GridNode newNode = new GridNode(componentName);
 						graph.add(newNode, mousePoint);
 						adjustToFrame(newNode);
 					}
@@ -178,6 +194,6 @@ public class GraphPanel extends JComponent {
 	}
 
 	private CircleGraph graph;
-	private ToolBar toolBar;
+	private ComponentList componentList;
 	private ActionBar actionBar;
 }
