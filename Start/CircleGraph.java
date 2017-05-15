@@ -74,7 +74,7 @@ public class CircleGraph implements Serializable{
 	private void loadComponentArray(ArrayList<JComponent> loadable){
 		components = loadable;
 	}
-	
+	/**Removes the component from the array list.*/
 	public void removeComponent(GridNode x){
 		components.remove(x);
 	}
