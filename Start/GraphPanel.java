@@ -15,7 +15,7 @@ public class GraphPanel extends JComponent {
 	private volatile JComponent clickedComponent;
 
 	public GraphPanel(ToolBar aToolBar, ActionBar aActionBar, CircleGraph aGraph) {
-		
+
 		actionBar = aActionBar;
 		toolBar = aToolBar;
 		graph = aGraph;
@@ -23,6 +23,8 @@ public class GraphPanel extends JComponent {
 		setBackground(Color.WHITE);
 		addMouseListener(new MouseListener() {
 			public void mousePressed(MouseEvent event) {
+				//FIX stuff
+				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
 				clickedComponent = getComponentAt(mousePoint); 
 				if(clickedComponent!=null){
@@ -31,21 +33,25 @@ public class GraphPanel extends JComponent {
 				Color nodeColor = toolBar.getSelectedCircleNodeColor();
 				if (nodeColor != null) {	//finds the color getSelectedCircleColor() returned.
 					if(nodeColor==Color.BLACK){	//Each if statement is defined by the button color. TODO: Make more convenient buttons.. 
-						GridNode newNode = new GridNode(1);
+						newNode = new GridNode(1);
 						mousePoint = adjustToOffset(newNode, mousePoint);
-						graph.add(newNode, mousePoint);	//.. and expand function of the buttons.
-						adjustToFrame(newNode);
+						if(inFrame(newNode, mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())==true){
+							graph.add(newNode, mousePoint);	//.. and expand function of the buttons.
+						}
 					}
 					else if(nodeColor==Color.WHITE){
-						GridNode newNode = new GridNode(6);
-						graph.add(newNode, mousePoint);
-						adjustToFrame(newNode);
+						newNode = new GridNode(6);
+						if(inFrame(newNode, mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())==true){
+							graph.add(newNode, mousePoint);
+						}
 					}
 					else if(nodeColor==Color.BLUE){
-						GridNode newNode = new GridNode(2);
-						graph.add(newNode, mousePoint);
-						adjustToFrame(newNode);
+						newNode = new GridNode(2);
+						if(inFrame(newNode, mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())==true){
+							graph.add(newNode, mousePoint);	//.. and expand function of the buttons.
+						}
 					}
+					clickedComponent = newNode;
 				}
 				repaint();
 			}
@@ -53,25 +59,25 @@ public class GraphPanel extends JComponent {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				clickedComponent = null;
-				
+
 			}
 
 		});
@@ -128,7 +134,7 @@ public class GraphPanel extends JComponent {
 	/**
 	 * Adjusts component to GraphPanels parent
 	 * @param Component
-	*/
+	 */
 	public void adjustToFrame(Component component){
 		if(getParent().getBounds().contains(component.getBounds())==false){
 			if(component.getBounds().getX()+component.getWidth()>getParent().getWidth()){
