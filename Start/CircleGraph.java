@@ -20,8 +20,9 @@ public class CircleGraph implements Serializable{
 	public CircleGraph() {
 		components = new ArrayList<JComponent>();
 	}
-
-	
+	public void add(Line line, Point2D p){
+		components.add(line);
+	}
 	public void add(JComponent c, Point2D p){
 		Rectangle2D bounds = c.getBounds();
 		c.setLocation((int)(p.getX() - bounds.getX()),(int)( p.getY() - bounds.getY()));
@@ -34,14 +35,15 @@ public class CircleGraph implements Serializable{
 	}
 
 	public void draw(Graphics2D g2) {
-		for(Component c : components)
+		for(Component c : components){
 			c.paint(g2);
+		}
 	}
-	
+
 	public List<JComponent> getComponents() {
 		return components;
 	}
-	
+
 	/*Saves the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and saves correctly
 	 * No more exception, .dat file is created. Have to test it by adding load function.*/
@@ -49,7 +51,7 @@ public class CircleGraph implements Serializable{
 		ArrayList<JComponent> saveObject = (ArrayList<JComponent>) this.getComponents();
 		SaveObject savable = new SaveObject(saveObject);
 		String file = "src\\"+filename + ".dat";
-		
+
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			out.writeObject(savable);
@@ -57,7 +59,7 @@ public class CircleGraph implements Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	/*Loads the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
@@ -67,7 +69,7 @@ public class CircleGraph implements Serializable{
 		ArrayList<JComponent> saveObject = savable.getInfo();
 		in.close();
 		loadComponentArray(saveObject);
-		
+
 	}
 	/**Changes the component array to the loaded objects component array.
 	 * Used to store loaded files information.*/

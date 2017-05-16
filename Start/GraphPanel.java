@@ -114,6 +114,11 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
+				if(clickedComponent.getClass() == Line.class){
+					if(getComponentAt(e.getPoint()).getClass()==CircleNode.class){
+						((Line)(clickedComponent)).setEnd((CircleNode)getComponentAt(e.getPoint()));
+					}
+				}
 				clickedComponent = null;
 
 			}
@@ -136,6 +141,17 @@ public class GraphPanel extends JComponent {
 						repaint();
 					}
 				}
+				else if(clickedComponent!=null&&clickedComponent.getClass()==CircleNode.class){
+					Line newLine = new Line((CircleNode)clickedComponent);
+					graph.add((Line)newLine,mousePoint);
+					clickedComponent = newLine;
+					((Line)(clickedComponent)).setEndPoint(mousePoint);
+					repaint();
+				}
+				else if(clickedComponent!=null&&clickedComponent.getClass()==Line.class){
+					((Line)(clickedComponent)).setEndPoint(mousePoint);
+					repaint();
+				}
 			}
 		});
 	}
@@ -144,6 +160,14 @@ public class GraphPanel extends JComponent {
 	public JComponent getComponentAt(Point point){
 		for(JComponent component : graph.getComponents()){
 			if(component.getBounds().contains(point)){
+				for(Component node : component.getComponents()){
+					System.out.println(point);
+					System.out.println(node.getBounds());
+					if(node.getBounds().contains(point)){
+						System.out.println("node here!");
+						return (JComponent)node;
+					}
+				}
 				return component;
 			}
 		}
@@ -213,7 +237,7 @@ public class GraphPanel extends JComponent {
 	 * @return Point p, adjusted to the grid
 	 * */
 	private Point snapToGrid(Point p){
-		p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
+		//p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
 		return p;
 	}
 	public void paintComponent(Graphics g) {

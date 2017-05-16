@@ -17,11 +17,13 @@ public class CircleNode extends JComponent implements Serializable{
 	public CircleNode(Color color) {
 		size = DEFAULT_SIZE;
 		setLocation(0,0);
+		setSize((int)size,(int)size);
 		this.color = color;
 	}
 	public CircleNode(int x, int y, double size, Color color){
 		this.size = size;
 		setLocation(x,y);
+		setSize((int)size,(int)size);
 		this.color = color;
 	}
 
