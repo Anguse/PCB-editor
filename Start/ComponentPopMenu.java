@@ -9,15 +9,22 @@ import javax.swing.JPopupMenu;
 
 public class ComponentPopMenu extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPopupMenu popMenu;
 	private CircleGraph gGraph;
 	private GridNode selectedComponent;
 	private String selectedItem;
 	private GraphPanel gp;
+	private ShoppingList sList;
 	
-	public ComponentPopMenu(CircleGraph g){
+	public ComponentPopMenu(CircleGraph g, ShoppingList s){
 		
 		gGraph = g;
+		
+		sList = s;
 		
 		popMenu = new JPopupMenu();
 		ActionListener menuListener = new ActionListener(){
@@ -25,8 +32,8 @@ public class ComponentPopMenu extends JPanel{
 				System.out.print("pop");
 				if(e.getActionCommand() == "Remove"){
 					System.out.print("yeah");
-					selectedItem = e.getActionCommand();
 					gGraph.removeComponent(selectedComponent);
+					sList.removeItem(selectedItem);
 					popMenu.setVisible(false);
 					gp.repaint();
 				}
@@ -48,6 +55,10 @@ public class ComponentPopMenu extends JPanel{
 	
 	public void selectComponent(GridNode g){
 		selectedComponent = g;
+	}
+	
+	public void selectItem(String s){
+		selectedItem = s;
 	}
 	
 	public String getSelected(){

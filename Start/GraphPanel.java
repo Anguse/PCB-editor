@@ -15,12 +15,13 @@ public class GraphPanel extends JComponent {
 	private volatile JComponent clickedComponent;
 	private GraphPanel mThis = this;
 
-	public GraphPanel(ComponentList cList,ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
+	public GraphPanel(ComponentList cList, ShoppingList sList, ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
 		
 		popMenu = pMenu;
 		jPopMenu = pMenu.getMenu();
 		actionBar = aActionBar;
 		componentList = cList;
+		shoppingList = sList;
 		graph = aGraph;
 		actionBar.setGraphPanel(this);
 		setBackground(Color.WHITE);
@@ -28,19 +29,21 @@ public class GraphPanel extends JComponent {
 			public void mousePressed(MouseEvent event){
 				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
-				clickedComponent = getComponentAt(mousePoint); 
+				clickedComponent = getComponentAt(mousePoint);
+				//System.out.print(clickedComponent);
 				jPopMenu.setVisible(false);
-				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event)){
+				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()){
 					return;
 				}
 				int componentIndex = componentList.getIndex();
 				String componentName = componentList.getComponentName();
-				if (SwingUtilities.isLeftMouseButton(event)) {
+				if (SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()) {
 					if(componentIndex==0){
 						newNode = new GridNode(1, componentName);
 						mousePoint = adjustToOffset(newNode, mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
+							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
@@ -48,6 +51,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(4, componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
+							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
@@ -55,6 +59,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(6, componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
+							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
@@ -62,6 +67,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(8, componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
+							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
@@ -69,6 +75,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
+							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
@@ -76,6 +83,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(componentName);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
+							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
@@ -87,7 +95,15 @@ public class GraphPanel extends JComponent {
 						newNode.getComponentPopupMenu().setLocation(mousePoint);
 						newNode.getComponentPopupMenu().setVisible(true);
 						popMenu.selectComponent(newNode);
+						popMenu.selectItem(componentName);
 						popMenu.externalRepaint(mThis);
+					}
+				} else if(event.isControlDown()){
+					System.out.print("here");
+					newNode = (GridNode) getComponentAt(mousePoint);
+					if(newNode != null){
+						graph.removeComponent(newNode);
+						shoppingList.removeItem(componentName);
 					}
 				}
 				clickedComponent = newNode;
@@ -133,6 +149,9 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
+				if(e.isControlDown()){
+					return;
+				}
 				Point mousePoint = snapToGrid(e.getPoint());
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
@@ -247,6 +266,7 @@ public class GraphPanel extends JComponent {
 
 	private CircleGraph graph;
 	private ComponentList componentList;
+	private ShoppingList shoppingList;
 	private ActionBar actionBar;
 	private ComponentPopMenu popMenu;
 	private JPopupMenu jPopMenu;

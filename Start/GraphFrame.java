@@ -16,17 +16,20 @@ public class GraphFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		CircleGraph graph = new CircleGraph();
-		pMenu = new ComponentPopMenu(graph);
+		JPanel upper = new JPanel();
 		cList = new ComponentList(graph);
+		sList = new ShoppingList(graph);
+		pMenu = new ComponentPopMenu(graph, sList);
 		toolBar = new ToolBar(graph);
 		actionBar = new ActionBar(graph);
-		panel = new GraphPanel(cList,pMenu, actionBar, graph);
+		panel = new GraphPanel(cList, sList, pMenu, actionBar, graph);
 		scrollPane = new JScrollPane(panel);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		
-		
+		upper.add(cList, BorderLayout.NORTH);
+		upper.add(sList, BorderLayout.SOUTH);
 		this.add(actionBar, BorderLayout.NORTH);
-		this.add(cList, BorderLayout.EAST);
+		this.add(upper, BorderLayout.EAST);
 		this.add(scrollPane, BorderLayout.CENTER);
 	}
 
@@ -35,6 +38,7 @@ public class GraphFrame extends JFrame {
 	private ToolBar toolBar;
 	private ActionBar actionBar;
 	private ComponentList cList;
+	private ShoppingList sList;
 	private ComponentPopMenu pMenu;
 
 	public static final int FRAME_WIDTH = 1200;

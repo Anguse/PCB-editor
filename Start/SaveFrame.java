@@ -20,9 +20,9 @@ public class SaveFrame extends JFrame implements Serializable{
 	public static final int FRAME_HEIGHT = 200;
 	private CircleGraph bGraph;
 
-	/**This frame is produced when the user wants to save file.
+	/**This frame is produced when the user wants to save a file.
 	 * The text field assumes the file is saved in the src folder.
-	 * @param CircleGraph graph, GraphPanel panel; used to reach and manipulate the used classes CircleGraph and GraphPanel
+	 * @param CircleGraph graph , used to manipulate the class CircleGraph.
 	 */
 	private static final long serialVersionUID = 1L;
 	
