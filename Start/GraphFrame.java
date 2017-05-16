@@ -41,6 +41,6 @@ public class GraphFrame extends JFrame {
 	private ShoppingList sList;
 	private ComponentPopMenu pMenu;
 
-	public static final int FRAME_WIDTH = 1200;
+	public static final int FRAME_WIDTH = 1200;	
 	public static final int FRAME_HEIGHT = 800;
 }

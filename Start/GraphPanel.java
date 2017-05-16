@@ -30,7 +30,6 @@ public class GraphPanel extends JComponent {
 				GridNode newNode = null;
 				Point mousePoint = snapToGrid(event.getPoint());
 				clickedComponent = getComponentAt(mousePoint);
-				//System.out.print(clickedComponent);
 				jPopMenu.setVisible(false);
 				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()){
 					return;
@@ -127,10 +126,9 @@ public class GraphPanel extends JComponent {
 				// TODO Auto-generated method stub
 
 			}
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(clickedComponent.getClass() == Line.class){
+				if(clickedComponent!=null&&clickedComponent.getClass() == Line.class){
 					if(getComponentAt(e.getPoint()).getClass()==CircleNode.class){
 						((Line)(clickedComponent)).setEnd((CircleNode)getComponentAt(e.getPoint()));
 					}
@@ -144,7 +142,15 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				// TODO Auto-generated method stub
+				Component hoverComponent = getComponentAt(e.getPoint());
+				if(hoverComponent!=null&&hoverComponent.getClass()==CircleNode.class){
+					Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
+				    setCursor(cursor);
+				}
+				else{
+					Cursor cursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
+					setCursor(cursor);
+				}
 			}
 
 			@Override

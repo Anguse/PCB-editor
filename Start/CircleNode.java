@@ -20,16 +20,17 @@ public class CircleNode extends JComponent implements Serializable{
 	public CircleNode(Color color) {
 		size = DEFAULT_SIZE;
 		setLocation(0,0);
-		setSize((int)size,(int)size);
+		setSize((int)size*2,(int)size*2);
+		setBounds(0,0,(int)size*2,(int)size*2);
 		this.color = color;
 	}
 	public CircleNode(int x, int y, double size, Color color){
 		this.size = size;
 		setLocation(x,y);
-		setSize((int)size,(int)size);
+		setSize((int)size*2,(int)size*2);
+		setBounds(x,y,(int)size*2,(int)size*2);
 		this.color = color;
 	}
-
 	public void draw(Graphics2D g2) {
 		Ellipse2D circle = new Ellipse2D.Double(getX(), getY(), size, size);
 		Color oldColor = g2.getColor();

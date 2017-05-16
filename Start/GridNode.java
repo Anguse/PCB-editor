@@ -76,7 +76,7 @@ public class GridNode extends JComponent implements Serializable{
 		x+=dx;y+=dy;
 		setLocation((int)(getLocation().getX()+dx),(int)(getLocation().getY()+dy));
 		for(Component component : getComponents()){
-			component.setLocation((int)(component.getLocation().getX()+dx),(int)(component.getLocation().getY()+dy));
+			component.setLocation((int)(component.getX()+dx),(int)(component.getY()+dy));
 		}
 	}
 	public void moveTo(double x, double y){
