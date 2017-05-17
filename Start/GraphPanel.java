@@ -16,7 +16,6 @@ public class GraphPanel extends JComponent {
 	private GraphPanel mThis = this;
 
 	public GraphPanel(ComponentList cList, ShoppingList sList, ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
-		
 		popMenu = pMenu;
 		jPopMenu = pMenu.getMenu();
 		actionBar = aActionBar;
@@ -162,7 +161,7 @@ public class GraphPanel extends JComponent {
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
 					if(inFrame((GridNode)clickedComponent,mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY())==true){
-						((GridNode) clickedComponent).vectorMove(mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY());	
+						((GridNode) clickedComponent).vectorMove(((int)(mousePoint.getX()-clickedComponent.getX())),(int)(mousePoint.getY()-clickedComponent.getY()));	
 						repaint();
 					}
 				}
@@ -182,18 +181,18 @@ public class GraphPanel extends JComponent {
 	}
 	/**Returns the component which contains @param point, if it exists.
 	 * Else null*/
-	public JComponent getComponentAt(Point point){
-		for(JComponent component : graph.getComponents()){
-			if(component.getBounds().contains(point)){
-				for(Component node : component.getComponents()){
+	public GridItem getComponentAt(Point point){
+		for(GridItem gridItem : graph.getComponents()){
+			if(gridItem.getBounds().contains(point)){
+				for(GridItem node : gridItem.getNodes()){
 					System.out.println(point);
 					System.out.println(node.getBounds());
 					if(node.getBounds().contains(point)){
 						System.out.println("node here!");
-						return (JComponent)node;
+						return node;
 					}
 				}
-				return component;
+				return gridItem;
 			}
 		}
 		return null;
@@ -239,7 +238,8 @@ public class GraphPanel extends JComponent {
 		}
 		return;
 	}
-	public void adjustToFrame(GridNode n){
+	/*REMOVE!?
+	 * public void adjustToFrame(GridNode n){
 		if(getParent().getBounds().contains(n.getBounds())==false){
 			if(n.getBounds().getX()+n.getWidth()>getParent().getWidth()){
 				n.moveTo(getParent().getWidth()-n.getWidth(), n.getY());
@@ -255,7 +255,7 @@ public class GraphPanel extends JComponent {
 			}
 		}
 		return;
-	}
+	}*/
 	/**
 	 * Modifies the Point p to fit the grid
 	 * @param Point p

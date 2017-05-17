@@ -12,37 +12,30 @@ import javax.swing.JComponent;
 /**
  * A circular node that is filled with a color.
  */
-public class CircleNode extends JComponent implements Serializable{
+public class CircleNode extends GridItem implements Serializable{
+	private Color color;
+	private static final int DEFAULT_SIZE = 5;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6316363996010354681L;
 	public CircleNode(Color color) {
-		size = DEFAULT_SIZE;
-		setLocation(0,0);
-		setSize((int)size*2,(int)size*2);
-		setBounds(0,0,(int)size*2,(int)size*2);
+		x=y=0;
+		w=h=DEFAULT_SIZE;
 		this.color = color;
+		setBounds(produceBounds());
 	}
-	public CircleNode(int x, int y, double size, Color color){
-		this.size = size;
-		setLocation(x,y);
-		setSize((int)size*2,(int)size*2);
-		setBounds(x,y,(int)size*2,(int)size*2);
+	public CircleNode(int x, int y, int size, Color color){
+		this.x=x;this.y=y;w=h=size;
 		this.color = color;
+		setBounds(produceBounds());
 	}
-	public void draw(Graphics2D g2) {
-		Ellipse2D circle = new Ellipse2D.Double(getX(), getY(), size, size);
-		Color oldColor = g2.getColor();
-		g2.setColor(color);
-		g2.fill(circle);
-		g2.setColor(oldColor);
-		g2.draw(circle);
+	public void paint(Graphics2D g) {
+		Ellipse2D circle = new Ellipse2D.Double(x,y,w,h);
+		Color oldColor = g.getColor();
+		g.setColor(color);
+		g.fill(circle);
+		g.setColor(oldColor);
+		g.draw(circle);
 	}
-	public void vectorMove(double dx,double dy){
-		setLocation((int)(getX()+dy),(int)(getY()+dy));
-	}
-	private double size;
-	private Color color;
-	private static final int DEFAULT_SIZE = 5;
 }
