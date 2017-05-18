@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
 
 public class GridNode extends GridItem implements Serializable{
-	private Color color;
 	private int DEFAULT_OFFSET = 10;
 	private static final int DEFAULT_SIZE = 20;
 	private int rows;
@@ -40,7 +39,7 @@ public class GridNode extends GridItem implements Serializable{
 	public GridNode(String text){
 		rows=2;
 		x=0;y=0;w=DEFAULT_SIZE+DEFAULT_OFFSET;h=DEFAULT_SIZE+10*(rows-1);
-		setBounds(0-DEFAULT_OFFSET/2,0,DEFAULT_SIZE+DEFAULT_OFFSET,DEFAULT_SIZE+10*(rows-1));
+		setBounds(produceBounds());
 		color = DEFAULT_COLOR;
 		tooltip = text;
 		setToolTipText(text);
@@ -50,6 +49,7 @@ public class GridNode extends GridItem implements Serializable{
 		add(new CircleNode(x+20, y+15,5,Color.CYAN));
 	}
 	public void paint(Graphics2D g){
+		setBounds(produceBounds());
 		Rectangle2D rectangle = new Rectangle(x,y,DEFAULT_SIZE,h);
 		Color oldColor = g.getColor();
 		g.setColor(color);

@@ -2,6 +2,7 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -12,13 +13,13 @@ public class GraphPanel extends JComponent {
 	private ActionBar actionBar;
 	private ComponentPopMenu popMenu;
 	private JPopupMenu jPopMenu;
+	private static final long serialVersionUID = 1L;
+	private volatile GridItem clickedComponent;
+	private volatile GridItem hoverComponent;
+	private GraphPanel mThis = this;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private volatile GridItem clickedComponent;
-	private GraphPanel mThis = this;
-
 	public GraphPanel(ComponentList cList, ShoppingList sList, ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
 		popMenu = pMenu;
 		jPopMenu = pMenu.getMenu();
@@ -131,11 +132,25 @@ public class GraphPanel extends JComponent {
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(clickedComponent!=null&&clickedComponent.getClass() == Line.class){
-					if(getComponentAt(e.getPoint()).getClass()==CircleNode.class){
+				if(clickedComponent.getClass() == Line.class){
+					if(isColliding((Line)clickedComponent)){
+						graph.removeComponent(clickedComponent);
+						repaint();
+						clickedComponent = null;
+						return;
+					}
+					else if(getComponentAt(e.getPoint())!=null&&getComponentAt(e.getPoint()).getClass()==CircleNode.class){
 						((Line)(clickedComponent)).setEnd((CircleNode)getComponentAt(e.getPoint()));
+						clickedComponent.setColor(clickedComponent.DEFAULT_COLOR);
+						repaint();
+						clickedComponent = null;
+						return;
+					}
+					else{
+						graph.removeComponent(clickedComponent);
 					}
 				}
+				repaint();
 				clickedComponent = null;
 
 			}
@@ -145,7 +160,7 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				GridItem hoverComponent = getComponentAt(e.getPoint());
+				hoverComponent = getComponentAt(e.getPoint());
 				if(hoverComponent!=null&&hoverComponent.getClass()==CircleNode.class){
 					Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
 				    setCursor(cursor);
@@ -177,17 +192,39 @@ public class GraphPanel extends JComponent {
 					repaint();
 				}
 				else if(clickedComponent!=null&&clickedComponent.getClass()==Line.class){
+					if(isColliding((Line)clickedComponent)){
+						clickedComponent.setCollided(true);
+					}
+					else{
+						clickedComponent.setCollided(false);
+						if(getComponentAt(e.getPoint())!=null&&getComponentAt(e.getPoint()).getClass()==CircleNode.class){
+							clickedComponent.setConnection(true);
+						}
+						else{
+							clickedComponent.setConnection(false);
+						}
+					}
 					((Line)(clickedComponent)).setEndPoint(mousePoint);
 					repaint();
 				}
 			}
 		});
 	}
+	public boolean isColliding(Line line){ 
+		for(GridItem gridItem : graph.getComponents()){
+			if(gridItem.getClass()==Line.class&&gridItem!=clickedComponent&&((Line)(clickedComponent)).produceLineBounds().intersectsLine((Line2D)((Line) gridItem).produceLineBounds())){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	/**Returns the component which contains @param point, if it exists.
 	 * Else null*/
 	public GridItem getComponentAt(Point point){
 		for(GridItem gridItem : graph.getComponents()){
-			if(gridItem.produceBounds().contains(point)){
+			if(gridItem.getBounds().contains(point)){
 				for(GridItem node : gridItem.getNodes()){
 					System.out.println(point);
 					System.out.println(node.getBounds());
@@ -221,27 +258,6 @@ public class GraphPanel extends JComponent {
 		point.x-=component.getWidth()/2;
 		point.y-=component.getHeight()/2;
 		return point;
-	}
-	/**
-	 * Adjusts component to GraphPanels parent
-	 * @param Component
-	 */
-	public void adjustToFrame(Component component){
-		if(getParent().getBounds().contains(component.getBounds())==false){
-			if(component.getBounds().getX()+component.getWidth()>getParent().getWidth()){
-				component.setLocation(getParent().getWidth()-component.getWidth(), component.getY());
-			}
-			if(component.getBounds().getX()<0){
-				component.setLocation(0,component.getY());
-			}
-			if(component.getBounds().getY()+component.getHeight()>getParent().getHeight()){
-				component.setLocation(component.getX(),getParent().getHeight()-component.getHeight());
-			}
-			if(component.getBounds().getY()<0){
-				component.setLocation(component.getX(), 0);
-			}
-		}
-		return;
 	}
 	/**
 	 * Modifies the Point p to fit the grid

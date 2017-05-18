@@ -5,8 +5,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Line2D.Double;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
@@ -20,11 +22,13 @@ public class Line extends GridItem{
 	private static final long serialVersionUID = -3370633118359886282L;
 	
 	public Line(CircleNode start){
+		color = DEFAULT_COLOR;
 		this.start = start;
 		end = null;
 		endPoint = new Point(0,0);
 	}
 	public Line(CircleNode start,Point endPoint){
+		color = DEFAULT_COLOR;
 		this.start = start;
 		end = null;
 		this.endPoint = endPoint;
@@ -49,13 +53,22 @@ public class Line extends GridItem{
 	}
 	public void paint(Graphics2D g) {
 		Color oldColor = g.getColor();
-		g.setColor(DEFAULT_COLOR);
+		g.setColor(color);
 		if(end!=null){
 			g.drawLine(start.getX(), start.getY(), end.getX(), end.getY());
 			return;
 		}
 		g.drawLine(start.getX(),start.getY(),(int)endPoint.getX(),(int)endPoint.getY());
-		
+		g.setColor(oldColor);
+	}
+	public Line2D produceLineBounds(){
+		Line2D line;
+		if(end!=null){
+			line = new Line2D.Double(start.getX(), start.getY(), end.getX(), end.getY());
+			return line;
+		}
+		line = new Line2D.Double(start.getLocation(),endPoint.getLocation());
+		return line;
 	}
 	
 }

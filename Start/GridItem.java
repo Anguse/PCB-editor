@@ -11,8 +11,10 @@ import javax.swing.JComponent;
 
 public abstract class GridItem extends JComponent{
 	protected int x,y,w,h;
-	@SuppressWarnings("unused")
 	protected Color DEFAULT_COLOR = Color.BLACK;
+	protected Color COLLISION_COLOR = Color.RED;
+	protected Color CONNECTION_COLOR = Color.GREEN;
+	protected Color color = DEFAULT_COLOR;
 	
 	/**
 	 * An abstract class for all the components to be placed in the GraphPanel
@@ -41,5 +43,24 @@ public abstract class GridItem extends JComponent{
 			}
 		}
 		return nodes;
+	}
+	public void setColor(Color color){
+		this.color = color;
+	}
+	public void setConnection(boolean state){
+		if(state==true){
+			color=CONNECTION_COLOR;
+		}
+		else{
+			color=DEFAULT_COLOR;
+		}
+	}
+	public void setCollided(boolean state){
+		if(state==true){
+			color=COLLISION_COLOR;
+		}
+		else{
+			color=DEFAULT_COLOR;
+		}
 	}
 }

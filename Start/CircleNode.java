@@ -13,7 +13,6 @@ import javax.swing.JComponent;
  * A circular node that is filled with a color.
  */
 public class CircleNode extends GridItem implements Serializable{
-	private Color color;
 	private static final int DEFAULT_SIZE = 5;
 	/**
 	 * 
@@ -22,12 +21,12 @@ public class CircleNode extends GridItem implements Serializable{
 	public CircleNode(Color color) {
 		x=y=0;
 		w=h=DEFAULT_SIZE;
-		this.color = color;
+		DEFAULT_COLOR=this.color=color;
 		setBounds(produceBounds());
 	}
 	public CircleNode(int x, int y, int size, Color color){
 		this.x=x;this.y=y;w=h=size;
-		this.color = color;
+		DEFAULT_COLOR=this.color=color;
 		setBounds(produceBounds());
 	}
 	public void paint(Graphics2D g) {
