@@ -11,8 +11,14 @@ import java.awt.geom.Rectangle2D;
 
 import javax.swing.JComponent;
 
-public class Line extends JComponent{
-
+public class Line extends GridItem{
+	private Point endPoint;
+	private CircleNode start,end;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3370633118359886282L;
+	
 	public Line(CircleNode start){
 		this.start = start;
 		end = null;
@@ -41,20 +47,15 @@ public class Line extends JComponent{
 	public CircleNode getEnd(){
 		return end;
 	}
-	public void paint(Graphics g2) {
-		Color oldColor = ((Graphics2D)(g2)).getColor();
-		g2.setColor(DEFAULT_COLOR);
+	public void paint(Graphics2D g) {
+		Color oldColor = g.getColor();
+		g.setColor(DEFAULT_COLOR);
 		if(end!=null){
-			g2.drawLine(start.getX(), start.getY(), end.getX(), end.getY());
+			g.drawLine(start.getX(), start.getY(), end.getX(), end.getY());
 			return;
 		}
-		g2.drawLine(start.getX(),start.getY(),(int)endPoint.getX(),(int)endPoint.getY());
+		g.drawLine(start.getX(),start.getY(),(int)endPoint.getX(),(int)endPoint.getY());
 		
 	}
-	private int x,y;
-	private double length;
-	private Point endPoint;
-	private CircleNode start,end;
-	private Color DEFAULT_COLOR = Color.BLACK;
-	private double DEFAULT_WIDTH = 1;
+	
 }

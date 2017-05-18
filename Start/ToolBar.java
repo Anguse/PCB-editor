@@ -52,7 +52,7 @@ public class ToolBar extends JPanel {
 				g2.translate(x, y);
 				g2.scale(scale, scale);
 				g2.setColor(Color.black);
-				n.draw(g2);
+				n.paint(g2);
 				g2.setTransform(oldTransform);
 			}
 		});

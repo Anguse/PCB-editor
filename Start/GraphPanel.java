@@ -2,21 +2,24 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.awt.event.*;
 import javax.swing.*;
 
 public class GraphPanel extends JComponent {
+	private CircleGraph graph;
+	private ComponentList componentList;
+	private ShoppingList shoppingList;
+	private ActionBar actionBar;
+	private ComponentPopMenu popMenu;
+	private JPopupMenu jPopMenu;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private volatile JComponent clickedComponent;
+	private volatile GridItem clickedComponent;
 	private GraphPanel mThis = this;
 
 	public GraphPanel(ComponentList cList, ShoppingList sList, ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
-		
 		popMenu = pMenu;
 		jPopMenu = pMenu.getMenu();
 		actionBar = aActionBar;
@@ -142,7 +145,7 @@ public class GraphPanel extends JComponent {
 
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				Component hoverComponent = getComponentAt(e.getPoint());
+				GridItem hoverComponent = getComponentAt(e.getPoint());
 				if(hoverComponent!=null&&hoverComponent.getClass()==CircleNode.class){
 					Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
 				    setCursor(cursor);
@@ -162,7 +165,7 @@ public class GraphPanel extends JComponent {
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
 					if(inFrame((GridNode)clickedComponent,mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY())==true){
-						((GridNode) clickedComponent).vectorMove(mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY());	
+						((GridNode) clickedComponent).vectorMove(((int)(mousePoint.getX()-clickedComponent.getX())),(int)(mousePoint.getY()-clickedComponent.getY()));	
 						repaint();
 					}
 				}
@@ -182,18 +185,18 @@ public class GraphPanel extends JComponent {
 	}
 	/**Returns the component which contains @param point, if it exists.
 	 * Else null*/
-	public JComponent getComponentAt(Point point){
-		for(JComponent component : graph.getComponents()){
-			if(component.getBounds().contains(point)){
-				for(Component node : component.getComponents()){
+	public GridItem getComponentAt(Point point){
+		for(GridItem gridItem : graph.getComponents()){
+			if(gridItem.produceBounds().contains(point)){
+				for(GridItem node : gridItem.getNodes()){
 					System.out.println(point);
 					System.out.println(node.getBounds());
 					if(node.getBounds().contains(point)){
 						System.out.println("node here!");
-						return (JComponent)node;
+						return node;
 					}
 				}
-				return component;
+				return gridItem;
 			}
 		}
 		return null;
@@ -202,8 +205,9 @@ public class GraphPanel extends JComponent {
 	 * Returns true if the given @param component, moved with the vector @param dx, @param dy 
 	 * still remains within the boundaries of its parent, else false
 	 * */
-	public boolean inFrame(Component component, double dx, double dy){
-		Rectangle2D bounds = new Rectangle((int)(component.getX()+dx),(int)(component.getY()+dy),component.getWidth(), component.getHeight());
+	public boolean inFrame(GridItem gridItem, double dx, double dy){
+		Rectangle2D bounds = gridItem.produceBounds();
+		bounds.setRect(bounds.getX()+dx, bounds.getY()+dy, gridItem.w, gridItem.h);
 		if(getParent().getBounds().contains(bounds)==false){
 			return false;
 		}
@@ -239,23 +243,6 @@ public class GraphPanel extends JComponent {
 		}
 		return;
 	}
-	public void adjustToFrame(GridNode n){
-		if(getParent().getBounds().contains(n.getBounds())==false){
-			if(n.getBounds().getX()+n.getWidth()>getParent().getWidth()){
-				n.moveTo(getParent().getWidth()-n.getWidth(), n.getY());
-			}
-			if(n.getBounds().getX()<0){
-				n.moveTo(0,n.getY());
-			}
-			if(n.getBounds().getY()+n.getHeight()>getParent().getHeight()){
-				n.moveTo(n.getX(),getParent().getHeight()-n.getHeight());
-			}
-			if(n.getBounds().getY()<0){
-				n.moveTo(n.getX(), 0);
-			}
-		}
-		return;
-	}
 	/**
 	 * Modifies the Point p to fit the grid
 	 * @param Point p
@@ -269,11 +256,4 @@ public class GraphPanel extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);
 	}
-
-	private CircleGraph graph;
-	private ComponentList componentList;
-	private ShoppingList shoppingList;
-	private ActionBar actionBar;
-	private ComponentPopMenu popMenu;
-	private JPopupMenu jPopMenu;
 }
