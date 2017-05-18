@@ -49,7 +49,6 @@ public class CircleGraph implements Serializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	/*Loads the components array.
 	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
