@@ -18,7 +18,7 @@ public class LoadFrame extends JFrame implements Serializable{
 	
 	public static final int FRAME_WIDTH = 300;
 	public static final int FRAME_HEIGHT = 200;
-	private CircleGraph bGraph;
+	private PcbGraph bGraph;
 	private GraphPanel gPanel;
 
 	/**This frame is produced when the user wants to load a file.
@@ -27,7 +27,7 @@ public class LoadFrame extends JFrame implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public LoadFrame(CircleGraph graph, GraphPanel panel){
+	public LoadFrame(PcbGraph graph, GraphPanel panel){
 		
 		bGraph = graph;
 		gPanel = panel;

@@ -18,7 +18,7 @@ public class SaveFrame extends JFrame implements Serializable{
 	
 	public static final int FRAME_WIDTH = 300;
 	public static final int FRAME_HEIGHT = 200;
-	private CircleGraph bGraph;
+	private PcbGraph bGraph;
 
 	/**This frame is produced when the user wants to save a file.
 	 * The text field assumes the file is saved in the src folder.
@@ -26,7 +26,7 @@ public class SaveFrame extends JFrame implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public SaveFrame(CircleGraph graph){
+	public SaveFrame(PcbGraph graph){
 		
 		bGraph = graph;
 		this.setTitle("Save file");

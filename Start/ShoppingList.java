@@ -18,7 +18,7 @@ public class ShoppingList extends JPanel{
 	private static final long serialVersionUID = -3495881061634047648L;
 	private HashMap<Integer, String> hmn;
 	private HashMap<Integer, Integer> hmv;
-	private CircleGraph gGraph;
+	private PcbGraph gGraph;
 	private DefaultListModel<String> model;
 	private List<String> indexList;
 	JList<String> list;
@@ -26,7 +26,7 @@ public class ShoppingList extends JPanel{
 	/**The ShoppingList class creates a JList, ArrayList and 2 HashMaps.
 	 * The ArrayList and HashMaps are used to track the amount of components used.*/
 	
-	public ShoppingList(CircleGraph g){
+	public ShoppingList(PcbGraph g){
 			hmn = new HashMap<Integer, String>();
 			hmv = new HashMap<Integer, Integer>();
 			

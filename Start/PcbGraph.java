@@ -13,14 +13,14 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-public class CircleGraph implements Serializable{
+public class PcbGraph implements Serializable{
 	private ArrayList<GridItem> gridItems;
 	/**
 	 * 
 	 * */
 	private static final long serialVersionUID = -6757559296850264270L;
 
-	public CircleGraph() {
+	public PcbGraph() {
 		gridItems = new ArrayList<GridItem>();
 	}
 	public void add(GridItem gridItem,Point2D p){

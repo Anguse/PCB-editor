@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class GraphPanel extends JComponent {
-	private CircleGraph graph;
+	private PcbGraph graph;
 	private ComponentList componentList;
 	private ShoppingList shoppingList;
 	private ActionBar actionBar;
@@ -19,7 +19,7 @@ public class GraphPanel extends JComponent {
 	private volatile GridItem clickedComponent;
 	private GraphPanel mThis = this;
 
-	public GraphPanel(ComponentList cList, ShoppingList sList, ComponentPopMenu pMenu, ActionBar aActionBar, CircleGraph aGraph) {
+	public GraphPanel(ComponentList cList, ShoppingList sList, ComponentPopMenu pMenu, ActionBar aActionBar, PcbGraph aGraph) {
 		popMenu = pMenu;
 		jPopMenu = pMenu.getMenu();
 		actionBar = aActionBar;
