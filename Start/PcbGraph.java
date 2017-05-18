@@ -68,6 +68,16 @@ public class PcbGraph implements Serializable{
 	/**Removes the component from the array list.*/
 	public void removeComponent(GridItem gridItem){
 		gridItems.remove(gridItem);
+		if(gridItem.getClass()==GridNode.class){
+			for(CircleNode node : gridItem.getNodes()){
+				if(node.isConnected()){
+					Line connection = node.getConnection();
+					connection.getEnd().disconnect();
+					connection.getStart().disconnect();
+					gridItems.remove(connection);
+				}
+			}
+		}
 	}
 
 }

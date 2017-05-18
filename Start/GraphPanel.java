@@ -102,7 +102,6 @@ public class GraphPanel extends JComponent {
 						popMenu.externalRepaint(mThis);
 					}
 				} else if(event.isControlDown()){
-					System.out.print("here");
 					newNode = (GridNode) getComponentAt(mousePoint);
 					if(newNode != null){
 						graph.removeComponent(newNode);
@@ -139,8 +138,9 @@ public class GraphPanel extends JComponent {
 						clickedComponent = null;
 						return;
 					}
-					else if(getComponentAt(e.getPoint())!=null&&getComponentAt(e.getPoint()).getClass()==CircleNode.class){
+					else if(getComponentAt(e.getPoint())!=null&&getComponentAt(e.getPoint()).getClass()==CircleNode.class&&differentParents(((Line)(clickedComponent)).getStart(),(CircleNode)getComponentAt(e.getPoint()))){
 						((Line)(clickedComponent)).setEnd((CircleNode)getComponentAt(e.getPoint()));
+						((CircleNode)(getComponentAt(e.getPoint()))).connect((Line)clickedComponent);
 						clickedComponent.setColor(clickedComponent.DEFAULT_COLOR);
 						repaint();
 						clickedComponent = null;
@@ -163,7 +163,7 @@ public class GraphPanel extends JComponent {
 				hoverComponent = getComponentAt(e.getPoint());
 				if(hoverComponent!=null&&hoverComponent.getClass()==CircleNode.class){
 					Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR); 
-				    setCursor(cursor);
+					setCursor(cursor);
 				}
 				else{
 					Cursor cursor = Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR);
@@ -176,6 +176,7 @@ public class GraphPanel extends JComponent {
 				if(e.isControlDown()){
 					return;
 				}
+				hoverComponent = getComponentAt(e.getPoint());
 				Point mousePoint = snapToGrid(e.getPoint());
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
@@ -186,18 +187,19 @@ public class GraphPanel extends JComponent {
 				}
 				else if(clickedComponent!=null&&clickedComponent.getClass()==CircleNode.class){
 					Line newLine = new Line((CircleNode)clickedComponent);
+					((CircleNode)(clickedComponent)).connect(newLine);
 					graph.add((Line)newLine,mousePoint);
 					clickedComponent = newLine;
 					((Line)(clickedComponent)).setEndPoint(mousePoint);
 					repaint();
 				}
 				else if(clickedComponent!=null&&clickedComponent.getClass()==Line.class){
-					if(isColliding((Line)clickedComponent)){
+					if(isColliding((Line)clickedComponent)||hoverComponent!=null&&hoverComponent.getClass()==CircleNode.class&&differentParents(((Line)clickedComponent).getStart(),(CircleNode)hoverComponent)==false){
 						clickedComponent.setCollided(true);
 					}
 					else{
 						clickedComponent.setCollided(false);
-						if(getComponentAt(e.getPoint())!=null&&getComponentAt(e.getPoint()).getClass()==CircleNode.class){
+						if(hoverComponent!=null&&hoverComponent.getClass()==CircleNode.class){
 							clickedComponent.setConnection(true);
 						}
 						else{
@@ -210,6 +212,9 @@ public class GraphPanel extends JComponent {
 			}
 		});
 	}
+	/**
+	 * Returns true if @param line is intersecting with another line 
+	 * */
 	public boolean isColliding(Line line){ 
 		for(GridItem gridItem : graph.getComponents()){
 			if(gridItem.getClass()==Line.class&&gridItem!=clickedComponent&&((Line)(clickedComponent)).produceLineBounds().intersectsLine((Line2D)((Line) gridItem).produceLineBounds())){
@@ -218,18 +223,13 @@ public class GraphPanel extends JComponent {
 		}
 		return false;
 	}
-	
-	
 	/**Returns the component which contains @param point, if it exists.
 	 * Else null*/
 	public GridItem getComponentAt(Point point){
 		for(GridItem gridItem : graph.getComponents()){
 			if(gridItem.getBounds().contains(point)){
 				for(GridItem node : gridItem.getNodes()){
-					System.out.println(point);
-					System.out.println(node.getBounds());
 					if(node.getBounds().contains(point)){
-						System.out.println("node here!");
 						return node;
 					}
 				}
@@ -265,11 +265,22 @@ public class GraphPanel extends JComponent {
 	 * @return Point p, adjusted to the grid
 	 * */
 	private Point snapToGrid(Point p){
+		//Add better snapping here
 		//p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
 		return p;
 	}
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);
+	}
+	/**
+	 * Returns true if the given @param start & @param end is located in different parents
+	 * */
+	public boolean differentParents(CircleNode start, CircleNode end){
+		GridNode node = (GridNode)start.getParent();
+		if(end!=null&&node!=end.getParent()){
+			return true;
+		}
+		return false;
 	}
 }

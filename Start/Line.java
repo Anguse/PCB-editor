@@ -55,19 +55,19 @@ public class Line extends GridItem{
 		Color oldColor = g.getColor();
 		g.setColor(color);
 		if(end!=null){
-			g.drawLine(start.getX(), start.getY(), end.getX(), end.getY());
+			g.drawLine((int)start.getBounds().getCenterX(),(int)start.getBounds().getCenterY(),(int)end.produceBounds().getCenterX(),(int)end.produceBounds().getCenterY());
 			return;
 		}
-		g.drawLine(start.getX(),start.getY(),(int)endPoint.getX(),(int)endPoint.getY());
+		g.drawLine((int)start.getBounds().getCenterX(),(int)start.getBounds().getCenterY(),(int)endPoint.getX(),(int)endPoint.getY());
 		g.setColor(oldColor);
 	}
 	public Line2D produceLineBounds(){
 		Line2D line;
 		if(end!=null){
-			line = new Line2D.Double(start.getX(), start.getY(), end.getX(), end.getY());
+			line = new Line2D.Double(start.getBounds().getCenterX(), start.getBounds().getCenterY(), end.produceBounds().getCenterX(), end.produceBounds().getCenterY());
 			return line;
 		}
-		line = new Line2D.Double(start.getLocation(),endPoint.getLocation());
+		line = new Line2D.Double(start.getBounds().getCenterX(), start.getBounds().getCenterY(), endPoint.getX(),endPoint.getY());
 		return line;
 	}
 	
