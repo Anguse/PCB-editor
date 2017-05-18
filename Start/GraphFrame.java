@@ -15,12 +15,11 @@ public class GraphFrame extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		CircleGraph graph = new CircleGraph();
+		PcbGraph graph = new PcbGraph();
 		JPanel upper = new JPanel();
 		cList = new ComponentList(graph);
 		sList = new ShoppingList(graph);
 		pMenu = new ComponentPopMenu(graph, sList);
-		toolBar = new ToolBar(graph);
 		actionBar = new ActionBar(graph);
 		panel = new GraphPanel(cList, sList, pMenu, actionBar, graph);
 		scrollPane = new JScrollPane(panel);

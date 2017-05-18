@@ -14,13 +14,13 @@ public class ComponentPopMenu extends JPanel{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPopupMenu popMenu;
-	private CircleGraph gGraph;
+	private PcbGraph gGraph;
 	private GridNode selectedComponent;
 	private String selectedItem;
 	private GraphPanel gp;
 	private ShoppingList sList;
 	
-	public ComponentPopMenu(CircleGraph g, ShoppingList s){
+	public ComponentPopMenu(PcbGraph g, ShoppingList s){
 		
 		gGraph = g;
 		

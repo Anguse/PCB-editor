@@ -11,7 +11,7 @@ public class ToolBar extends JPanel {
 	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE};
 	private String[] names = {"AND", "OR", "NOT"};
 
-	public ToolBar(CircleGraph graph) {
+	public ToolBar(PcbGraph graph) {
 		group = new ButtonGroup();
 		for (Color c : nodeColors)
 			add(new CircleNode(c));

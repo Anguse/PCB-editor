@@ -24,7 +24,7 @@ public class ActionBar extends JPanel implements Serializable{
 	private static final String[] IMG_PATHS_NAME = {"SAVE", "OPEN"};
 	
 	private ButtonGroup group;
-	private CircleGraph bGraph;
+	private PcbGraph bGraph;
 	private GraphPanel gPanel;
 	
 	/**ActionBar produces buttons that have standard functions as
@@ -32,7 +32,7 @@ public class ActionBar extends JPanel implements Serializable{
 	 * @param CircleGraph graph, used to manipulate the CircleGraph class used.
 	 * */
 	
-	public ActionBar(CircleGraph graph) {
+	public ActionBar(PcbGraph graph) {
 		bGraph = graph;
 		group = new ButtonGroup();
 		for (String c : IMG_PATHS){

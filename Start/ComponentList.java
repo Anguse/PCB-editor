@@ -14,7 +14,7 @@ public class ComponentList extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private CircleGraph gGraph;
+	private PcbGraph gGraph;
 	private String[] testList = {"NOT", "4-pin component", "6-pin component", "8-pin component", "AND", "OR" };
 	private String selected;
 	JList<String> list;
@@ -23,7 +23,7 @@ public class ComponentList extends JPanel{
 	 * The array containing the information on what is being selected need
 	 * to match the amount of components that can be created in the GrapgPanel.*/
 	
-	public ComponentList(CircleGraph g){
+	public ComponentList(PcbGraph g){
 		selected = "";
 		
 		
