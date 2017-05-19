@@ -58,7 +58,6 @@ public class PcbGraph implements Serializable{
 		ArrayList<GridItem> saveObject = savable.getInfo();
 		in.close();
 		loadComponentArray(saveObject);
-
 	}
 	/**Changes the component array to the loaded objects component array.
 	 * Used to store loaded files information.*/

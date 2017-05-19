@@ -32,7 +32,7 @@ public class GraphPanel extends JComponent {
 		addMouseListener(new MouseListener() {
 			public void mousePressed(MouseEvent event){
 				GridNode newNode = null;
-				Point mousePoint = snapToGrid(event.getPoint());
+				Point mousePoint = event.getPoint();
 				clickedComponent = getComponentAt(mousePoint);
 				jPopMenu.setVisible(false);
 				if(clickedComponent!=null && SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()){
@@ -43,15 +43,17 @@ public class GraphPanel extends JComponent {
 				if (SwingUtilities.isLeftMouseButton(event) && !event.isControlDown()) {
 					if(componentIndex==0){
 						newNode = new GridNode(1, componentName);
-						mousePoint = adjustToOffset(newNode, mousePoint);
+						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
-							graph.add(newNode, mousePoint);
+							mousePoint = adjustToOffset(clickedComponent, mousePoint);
+							graph.add(newNode,mousePoint);
 							shoppingList.addItem(componentName);
 						}
 						newNode.setComponentPopupMenu(jPopMenu);
 					}
 					else if(componentIndex==1){
-						newNode = new GridNode(4, componentName);
+						newNode = new GridNode(4,componentName);
+						mousePoint=snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
@@ -60,6 +62,7 @@ public class GraphPanel extends JComponent {
 					}
 					else if(componentIndex==2){
 						newNode = new GridNode(6, componentName);
+						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
@@ -68,6 +71,7 @@ public class GraphPanel extends JComponent {
 					}
 					else if(componentIndex==3){
 						newNode = new GridNode(8, componentName);
+						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
@@ -76,6 +80,7 @@ public class GraphPanel extends JComponent {
 					}
 					else if(componentIndex==4){
 						newNode = new GridNode(componentName);
+						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
@@ -84,6 +89,7 @@ public class GraphPanel extends JComponent {
 					}
 					else if(componentIndex==5){
 						newNode = new GridNode(componentName);
+						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
@@ -131,7 +137,7 @@ public class GraphPanel extends JComponent {
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(clickedComponent.getClass() == Line.class){
+				if(clickedComponent!=null&&clickedComponent.getClass() == Line.class){
 					if(isColliding((Line)clickedComponent)){
 						graph.removeComponent(clickedComponent);
 						repaint();
@@ -176,10 +182,14 @@ public class GraphPanel extends JComponent {
 				if(e.isControlDown()){
 					return;
 				}
+				Point mousePoint = e.getPoint();
 				hoverComponent = getComponentAt(e.getPoint());
-				Point mousePoint = snapToGrid(e.getPoint());
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
+					if(hoverComponent!=null&&hoverComponent.getClass()==GridNode.class){
+						return;
+					}
+					mousePoint = snapToGrid(e.getPoint());
 					if(inFrame((GridNode)clickedComponent,mousePoint.getX()-clickedComponent.getX(),mousePoint.getY()-clickedComponent.getY())==true){
 						((GridNode) clickedComponent).vectorMove(((int)(mousePoint.getX()-clickedComponent.getX())),(int)(mousePoint.getY()-clickedComponent.getY()));	
 						repaint();
@@ -213,6 +223,7 @@ public class GraphPanel extends JComponent {
 		});
 	}
 	/**
+
 	 * Returns true if @param line is intersecting with another line 
 	 * */
 	public boolean isColliding(Line line){ 
@@ -255,8 +266,11 @@ public class GraphPanel extends JComponent {
 	 * @return Adjusted point
 	 * */
 	public Point adjustToOffset(Component component, Point point){
-		point.x-=component.getWidth()/2;
-		point.y-=component.getHeight()/2;
+		if(component!=null){
+			point.x-=component.getWidth()/2;
+			point.y-=component.getHeight()/2;
+			return point;
+		}
 		return point;
 	}
 	/**
@@ -266,10 +280,11 @@ public class GraphPanel extends JComponent {
 	 * */
 	private Point snapToGrid(Point p){
 		//Add better snapping here
-		//p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
+		p.setLocation(p.getX()-p.getX()%30,p.getY()-p.getY()%20);
 		return p;
 	}
 	public void paintComponent(Graphics g) {
+		drawGrid(g);
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);
 	}
@@ -282,5 +297,16 @@ public class GraphPanel extends JComponent {
 			return true;
 		}
 		return false;
+	}
+	/**
+	 * Draws a grid on the @param g
+	 * */
+	public void drawGrid(Graphics g){
+		for(int i = 0; i < getParent().getHeight()/20; i++){
+			g.drawLine(0, 20*i, getParent().getWidth(), 20*i);
+		}
+		for(int i = 0; i <= getParent().getWidth()/30; i++){
+			g.drawLine(30*i,0,30*i,getParent().getHeight());
+		}
 	}
 }
