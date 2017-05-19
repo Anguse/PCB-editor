@@ -104,14 +104,14 @@ public class GraphPanel extends JComponent {
 						newNode.getComponentPopupMenu().setLocation(mousePoint);
 						newNode.getComponentPopupMenu().setVisible(true);
 						popMenu.selectComponent(newNode);
-						popMenu.selectItem(componentName);
+						popMenu.selectItem(newNode.getCompName());
 						popMenu.externalRepaint(mThis);
 					}
 				} else if(event.isControlDown()){
 					newNode = (GridNode) getComponentAt(mousePoint);
 					if(newNode != null){
 						graph.removeComponent(newNode);
-						shoppingList.removeItem(componentName);
+						shoppingList.removeItem(newNode.getCompName());
 					}
 				}
 				clickedComponent = newNode;
