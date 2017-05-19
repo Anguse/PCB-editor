@@ -24,6 +24,7 @@ public class GraphFrame extends JFrame {
 		panel = new GraphPanel(cList, sList, pMenu, actionBar, graph);
 		scrollPane = new JScrollPane(panel);
 		scrollPane.getViewport().setBackground(Color.WHITE);
+		graph.setShoppingList(sList);
 		
 		upper.add(cList, BorderLayout.NORTH);
 		upper.add(sList, BorderLayout.SOUTH);

@@ -68,4 +68,8 @@ public class GridNode extends GridItem implements Serializable{
 		Rectangle bounds = new Rectangle(x-DEFAULT_OFFSET/2,y,w,h);
 		return bounds;
 	}
+	
+	public String getCompName(){
+		return tooltip;
+	}
 }

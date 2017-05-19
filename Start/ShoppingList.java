@@ -45,6 +45,7 @@ public class ShoppingList extends JPanel{
 	 * to the JList model to display the items. If there is already a item of the same name,
 	 * addItem will increment the value in the hmv HashMap and set the text in the JList accordingly.*/
 	public void addItem(String item){
+		System.out.println(item);
 		if(hmn.get(item.hashCode()) == null){
 			hmn.put(item.hashCode(), item);
 			indexList.add(item);
@@ -61,6 +62,8 @@ public class ShoppingList extends JPanel{
 	/**Removes a item. If there is more than one component of the items name placed. removeItem() will decrement
 	 * the value in the hmv HashMap and update the JList accordingly.*/
 	public String removeItem(String item){
+		System.out.print(item);
+		System.out.print(hmv.get(item.hashCode()));
 		if(hmv.get(item.hashCode()) == 1){
 			hmn.remove(item.hashCode());
 			hmv.remove(item.hashCode());
@@ -72,5 +75,43 @@ public class ShoppingList extends JPanel{
 			hmv.put(item.hashCode(), hmv.get(item.hashCode())-1);
 		}
 		return item;
+	}
+	
+	public HashMap<Integer, String> getHmn(){
+		return hmn;
+	}
+	
+	public HashMap<Integer, Integer> getHmv(){
+		return hmv;
+	}
+	
+	public ArrayList<String> getIndexList(){
+		return (ArrayList<String>) indexList;
+	}
+	
+	public DefaultListModel<String> getModel(){
+		return model;
+	}
+	
+	/**Updates the shopping list. This method is called when loading a file. It is important that the HashMaps and the
+	 * ArrayList matches.
+	 * */
+	public void updateList(HashMap<Integer, String> n,HashMap<Integer, Integer> v,ArrayList<String> iList ){
+		String name;
+		int amount;
+		for(int i = 0; i<indexList.size(); i++){
+			name = indexList.get(i);
+			amount = hmv.get(name.hashCode());
+			for(int j = 0; j<amount; j++){
+				this.removeItem(name);
+			}
+		}
+		for(int i = 0; i<iList.size(); i++){
+			name = iList.get(i);
+			amount = v.get(name.hashCode());
+			for(int j = 0; j<amount; j++){
+				this.addItem(name);
+			}
+		}
 	}
 }

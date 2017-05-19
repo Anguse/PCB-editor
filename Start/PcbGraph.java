@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 
 public class PcbGraph implements Serializable{
 	private ArrayList<GridItem> gridItems;
+	private ShoppingList shoppingList;
 	/**
 	 * 
 	 * */
@@ -40,7 +41,7 @@ public class PcbGraph implements Serializable{
 	 * No more exception, .dat file is created. Have to test it by adding load function.*/
 	public void saveComponents(String filename){
 		ArrayList<GridItem> saveObject = (ArrayList<GridItem>)getComponents();
-		SaveObject savable = new SaveObject(saveObject);
+		SaveObject savable = new SaveObject(saveObject, shoppingList.getHmn(), shoppingList.getHmv(), shoppingList.getIndexList());
 		String file = "src\\"+filename + ".dat";
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
@@ -58,6 +59,7 @@ public class PcbGraph implements Serializable{
 		ArrayList<GridItem> saveObject = savable.getInfo();
 		in.close();
 		loadComponentArray(saveObject);
+		shoppingList.updateList(savable.getHmn(),savable.getHmv(),savable.getIndexList());
 
 	}
 	/**Changes the component array to the loaded objects component array.
@@ -78,6 +80,10 @@ public class PcbGraph implements Serializable{
 				}
 			}
 		}
+	}
+	
+	public void setShoppingList(ShoppingList sList){
+		shoppingList = sList;
 	}
 
 }
