@@ -308,10 +308,13 @@ public class GraphPanel extends JComponent {
 	 * */
 	public void drawGrid(Graphics g){
 		for(int i = 0; i < getParent().getHeight()/20; i++){
-			g.drawLine(0, 20*i, getParent().getWidth(), 20*i);
+			for(int j = 0; j<getParent().getWidth(); j = j+4){
+				g.drawLine(j, 20*i, j+1, 20*i);
+			}
 		}
 		for(int i = 0; i <= getParent().getWidth()/30; i++){
-			g.drawLine(30*i,0,30*i,getParent().getHeight());
+			for(int j = 0; j<= getParent().getHeight(); j = j+4)
+			g.drawLine(30*i,j,30*i,j+1);
 		}
 	}
 }
