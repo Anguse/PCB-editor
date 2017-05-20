@@ -33,6 +33,11 @@ public class Line extends GridItem{
 		end = null;
 		this.endPoint = endPoint;
 	}
+	public Line(CircleNode start, CircleNode end){
+		color = DEFAULT_COLOR;
+		this.start= start;
+		this.end = end;
+	}
 	public void setEndPoint(Point endPoint){
 		this.endPoint = endPoint;
 	}
@@ -69,6 +74,10 @@ public class Line extends GridItem{
 		}
 		line = new Line2D.Double(start.getBounds().getCenterX(), start.getBounds().getCenterY(), endPoint.getX(),endPoint.getY());
 		return line;
+	}
+	@Override
+	public String toString() {
+		return "Line";
 	}
 	
 }

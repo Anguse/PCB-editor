@@ -72,4 +72,8 @@ public class GridNode extends GridItem implements Serializable{
 	public String getCompName(){
 		return tooltip;
 	}
+	@Override
+	public String toString() {
+		return tooltip;
+	}
 }

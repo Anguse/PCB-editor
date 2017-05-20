@@ -33,7 +33,7 @@ public class PcbGraph implements Serializable{
 			gridItem.paint(g);
 		}
 	}
-	public List<GridItem> getComponents() {
+	public ArrayList<GridItem> getComponents() {
 		return gridItems;
 	}
 	/*Saves the components array.

@@ -55,4 +55,10 @@ public class CircleNode extends GridItem implements Serializable{
 	public Line getConnection(){
 		return connection;
 	}
+	/**
+	 * Not used in this class, therefore returns just "CircleNode"
+	 * */
+	public String toString() {
+		return "CircleNode";
+	}
 }

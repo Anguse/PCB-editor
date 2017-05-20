@@ -22,6 +22,7 @@ public abstract class GridItem extends JComponent{
 	private static final long serialVersionUID = -5327478353150778105L;
 	
 	public abstract void paint(Graphics2D g);
+	public abstract String toString();
 	public void vectorMove(int dx,int dy){
 		x+=dx;y+=dy;
 		setLocation(x,y);
@@ -63,4 +64,5 @@ public abstract class GridItem extends JComponent{
 			color=DEFAULT_COLOR;
 		}
 	}
+	
 }

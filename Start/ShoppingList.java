@@ -106,6 +106,10 @@ public class ShoppingList extends JPanel{
 				this.removeItem(name);
 			}
 		}
+		model.removeAllElements();
+		hmn = new HashMap<Integer, String>();
+		hmv = new HashMap<Integer, Integer>();
+		indexList = new ArrayList<String>();
 		for(int i = 0; i<iList.size(); i++){
 			name = iList.get(i);
 			amount = v.get(name.hashCode());
