@@ -191,7 +191,7 @@ public class GraphPanel extends JComponent {
 				hoverComponent = getComponentAt(e.getPoint());
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
-					if(hoverComponent!=null&&hoverComponent.getClass()==GridNode.class){
+					if(hoverComponent!=null&&hoverComponent.getClass()==GridNode.class&&hoverComponent!=clickedComponent){
 						return;
 					}
 					mousePoint = snapToGrid(e.getPoint());
