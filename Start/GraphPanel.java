@@ -45,7 +45,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(1, componentName);
 						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
-							mousePoint = adjustToOffset(clickedComponent, mousePoint);
+							mousePoint.setLocation(mousePoint.getX()+5, mousePoint.getY());
 							graph.add(newNode,mousePoint);
 							shoppingList.addItem(componentName);
 						}
@@ -55,6 +55,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(4,componentName);
 						mousePoint=snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							mousePoint.setLocation(mousePoint.getX()+5, mousePoint.getY());
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
 						}
@@ -64,6 +65,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(6, componentName);
 						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							mousePoint.setLocation(mousePoint.getX()+5, mousePoint.getY());
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
 						}
@@ -73,6 +75,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(8, componentName);
 						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							mousePoint.setLocation(mousePoint.getX()+5, mousePoint.getY());
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
 						}
@@ -82,6 +85,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(componentName);
 						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							mousePoint.setLocation(mousePoint.getX()+5, mousePoint.getY());
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
 						}
@@ -91,6 +95,7 @@ public class GraphPanel extends JComponent {
 						newNode = new GridNode(componentName);
 						mousePoint = snapToGrid(mousePoint);
 						if(inFrame(newNode,mousePoint.getX()-newNode.getX(),mousePoint.getY()-newNode.getY())){
+							mousePoint.setLocation(mousePoint.getX()+5, mousePoint.getY());
 							graph.add(newNode, mousePoint);
 							shoppingList.addItem(componentName);
 						}
