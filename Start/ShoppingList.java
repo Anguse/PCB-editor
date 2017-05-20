@@ -27,17 +27,17 @@ public class ShoppingList extends JPanel{
 	 * The ArrayList and HashMaps are used to track the amount of components used.*/
 	
 	public ShoppingList(PcbGraph g){
-			hmn = new HashMap<Integer, String>();
-			hmv = new HashMap<Integer, Integer>();
+		hmn = new HashMap<Integer, String>();
+		hmv = new HashMap<Integer, Integer>();
+		indexList = new ArrayList<String>();
+		gGraph = g;
+		list = new JList<String>(model = new DefaultListModel<>());
+		list.setBounds(60, 60, 30, 60);
+		list.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 			
-			gGraph = g;
-			list = new JList<String>(model = new DefaultListModel<>());
-			list.setBounds(60, 60, 30, 60);
-			list.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+		indexList = new ArrayList<String>();
 			
-			indexList = new ArrayList<String>();
-			
-			add(list);
+		add(list);
 	}
 	
 	
