@@ -191,7 +191,7 @@ public class GraphPanel extends JComponent {
 				hoverComponent = getComponentAt(e.getPoint());
 				mousePoint = adjustToOffset(clickedComponent,mousePoint);
 				if(clickedComponent!=null&&clickedComponent.getClass()==GridNode.class){
-					if(hoverComponent!=null&&hoverComponent.getClass()==GridNode.class&&hoverComponent!=clickedComponent){
+					if(hoverComponent!=null&&hoverComponent!=clickedComponent&&intersects(clickedComponent, hoverComponent)==false){
 						return;
 					}
 					mousePoint = snapToGrid(e.getPoint());
@@ -316,5 +316,11 @@ public class GraphPanel extends JComponent {
 			for(int j = 0; j<= getParent().getHeight(); j = j+4)
 			g.drawLine(30*i,j,30*i,j+1);
 		}
+	}
+	public boolean intersects(GridItem item1,GridItem item2){
+		Area area1 = new Area(item1.getBounds());
+		Area area2 = new Area(item2.getBounds());
+		
+		return (area1.intersects(area2.getBounds2D()));
 	}
 }
