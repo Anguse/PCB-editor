@@ -1,24 +1,15 @@
 package Start;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.LinearGradientPaint;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
-import java.awt.geom.Rectangle2D;
-
-import javax.swing.JComponent;
-
+/**
+ * The class for the lines to draw between the components in the grid
+ */
 public class Line extends GridItem{
 	private Point endPoint;
 	private CircleNode start,end;
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3370633118359886282L;
 	
 	public Line(CircleNode start){

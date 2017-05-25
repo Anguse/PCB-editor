@@ -1,33 +1,24 @@
 package Start;
 
-import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.io.Serializable;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+/**This frame is produced when the user wants to save a file.
+ * The text field assumes the file is saved in the src folder.
+ * @param CircleGraph graph , used to manipulate the class CircleGraph.
+ */
 public class SaveFrame extends JFrame implements Serializable{
 	
 	public static final int FRAME_WIDTH = 300;
 	public static final int FRAME_HEIGHT = 200;
 	private PcbGraph bGraph;
-
-	/**This frame is produced when the user wants to save a file.
-	 * The text field assumes the file is saved in the src folder.
-	 * @param CircleGraph graph , used to manipulate the class CircleGraph.
-	 */
 	private static final long serialVersionUID = 1L;
-	
 	public SaveFrame(PcbGraph graph){
-		
 		bGraph = graph;
 		this.setTitle("Save file");
 		

@@ -4,21 +4,16 @@ import java.awt.geom.*;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
-import java.util.List;
-
-import javax.swing.JComponent;
-
+/**
+ * The model module of the PCBGraphEditor, this is where all of the grids components is located
+ * */
 public class PcbGraph implements Serializable{
 	private ArrayList<GridItem> gridItems;
 	private ShoppingList shoppingList;
-	/**
-	 * 
-	 * */
 	private static final long serialVersionUID = -6757559296850264270L;
 
 	public PcbGraph() {
@@ -36,9 +31,9 @@ public class PcbGraph implements Serializable{
 	public ArrayList<GridItem> getComponents() {
 		return gridItems;
 	}
-	/*Saves the components array.
-	 * TODO: Thoroughly testing to makes sure components are recreatable and saves correctly
-	 * No more exception, .dat file is created. Have to test it by adding load function.*/
+	/**Saves all of the components in the list gridItems to a .dat file
+	 * @param filename - A String that declares the name of the file to be saved
+	 **/
 	public void saveComponents(String filename){
 		ArrayList<GridItem> saveObject = (ArrayList<GridItem>)getComponents();
 		SaveObject savable = new SaveObject(saveObject, shoppingList.getHmn(), shoppingList.getHmv(), shoppingList.getIndexList());
@@ -51,8 +46,9 @@ public class PcbGraph implements Serializable{
 			e.printStackTrace();
 		}
 	}
-	/*Loads the components array.
-	 * TODO: Thoroughly testing to makes sure components are recreatable and loads correctly*/
+	/**Loads the file of the given filename, if it exists and sets the the list gridItems to the loaded file
+	 * @param filepath - The name of the file to be loaded
+	 **/
 	public void loadComponents(String filepath) throws IOException, ClassNotFoundException{
 		ObjectInputStream in = new ObjectInputStream (new FileInputStream ("src\\"+filepath+".dat"));
 		SaveObject savable = (SaveObject) in.readObject();
@@ -66,7 +62,7 @@ public class PcbGraph implements Serializable{
 	private void loadComponentArray(ArrayList<GridItem> loadable){
 		gridItems = loadable;
 	}
-	/**Removes the component from the array list.*/
+	/**Removes the component from the list gridItems.*/
 	public void removeComponent(GridItem gridItem){
 		gridItems.remove(gridItem);
 		if(gridItem.getClass()==GridNode.class){
@@ -80,10 +76,8 @@ public class PcbGraph implements Serializable{
 			}
 		}
 	}
-	
 	public void setShoppingList(ShoppingList sList){
 		shoppingList = sList;
 	}
-
 }
 

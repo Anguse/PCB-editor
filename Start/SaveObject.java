@@ -1,14 +1,10 @@
 package Start;
 
-import java.awt.Component;
-import java.awt.List;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JComponent;
-
+/**The SaveObject is used to save all components used and added to a ArrayList;
+ * to save to a single object.*/
 public class SaveObject implements Serializable{
 
 	private static final long serialVersionUID = -7618804253210183551L;
@@ -16,9 +12,6 @@ public class SaveObject implements Serializable{
 	private HashMap<Integer, String> hmn;
 	private HashMap<Integer, Integer> hmv;
 	private ArrayList<String> indexList;
-	
-	/**The SaveObject is used to save all components used and added to a ArrayList;
-	 * to save to a single object.*/
 	
 	public SaveObject(ArrayList<GridItem> saveObject, HashMap<Integer, String> n, HashMap<Integer, Integer> v,
 			ArrayList<String> iList){

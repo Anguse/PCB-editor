@@ -1,27 +1,18 @@
 package Start;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
-
+/**
+ * The class for the gates in the grid
+ */
 public class GridNode extends GridItem implements Serializable{
 	private int DEFAULT_OFFSET = 10;
 	private static final int DEFAULT_SIZE = 20;
 	private int rows;
 	private String tooltip;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3735539464503062041L;
 
+	private static final long serialVersionUID = -3735539464503062041L;
 	public GridNode(int rows, String text){
 		this.rows = rows;
 		x=0;y=0;w=DEFAULT_SIZE+DEFAULT_OFFSET;h=DEFAULT_SIZE+10*(rows-1);
@@ -34,8 +25,9 @@ public class GridNode extends GridItem implements Serializable{
 			add(new CircleNode(x+20, y+10*(i+1),5,Color.CYAN));
 		}	
 	}
-	/* This constructor creates a GridNode with set size and uneven amount of
-	 * pins (2 and 1).*/
+	/** This constructor creates a GridNode with set size and uneven amount of
+	  *	pins (2 and 1).
+	  **/
 	public GridNode(String text){
 		rows=2;
 		x=0;y=0;w=DEFAULT_SIZE+DEFAULT_OFFSET;h=DEFAULT_SIZE+10*(rows-1);
@@ -63,12 +55,15 @@ public class GridNode extends GridItem implements Serializable{
 		g.drawString(tooltip, getX()-(tooltip.length()/2)+1, getY()-1);
 		g.setColor(oldColor);
 	}
+	/**
+	 * Generates the bounds for this component
+	 * @return the bounds of the component, given as a rectangle
+	 * */
 	@Override
 	public Rectangle produceBounds(){
 		Rectangle bounds = new Rectangle(x-DEFAULT_OFFSET/2,y,w,h);
 		return bounds;
 	}
-	
 	public String getCompName(){
 		return tooltip;
 	}

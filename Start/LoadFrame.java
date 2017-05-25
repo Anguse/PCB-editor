@@ -1,19 +1,18 @@
 package Start;
 
-import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+/**This frame is produced when the user wants to load a file.
+ * The text field assumes the file is saved in the src folder.
+ * @param CircleGraph graph, GraphPanel panel; used to reach and manipulate the used classes CircleGraph and GraphPanel
+ */
 public class LoadFrame extends JFrame implements Serializable{
 	
 	public static final int FRAME_WIDTH = 300;
@@ -21,12 +20,7 @@ public class LoadFrame extends JFrame implements Serializable{
 	private PcbGraph bGraph;
 	private GraphPanel gPanel;
 
-	/**This frame is produced when the user wants to load a file.
-	 * The text field assumes the file is saved in the src folder.
-	 * @param CircleGraph graph, GraphPanel panel; used to reach and manipulate the used classes CircleGraph and GraphPanel
-	 */
 	private static final long serialVersionUID = 1L;
-	
 	public LoadFrame(PcbGraph graph, GraphPanel panel){
 		
 		bGraph = graph;

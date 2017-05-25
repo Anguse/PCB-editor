@@ -3,7 +3,6 @@ package Start;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,26 +11,23 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
+/**
+ * A class for the bar with the save & load buttons
+ * */
 public class ActionBar extends JPanel implements Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static final String[] IMG_PATHS = {	"src\\saveIcon.png",
 												"src\\openIcon.png"};
 	private static final String[] IMG_PATHS_NAME = {"SAVE", "OPEN"};
-	
+	public static final int FRAME_WIDTH = 600;
+	public static final int FRAME_HEIGHT = 400;	
 	private ButtonGroup group;
 	private PcbGraph bGraph;
 	private GraphPanel gPanel;
-	
 	/**ActionBar produces buttons that have standard functions as
 	 * save and load.
 	 * @param CircleGraph graph, used to manipulate the CircleGraph class used.
 	 * */
-	
 	public ActionBar(PcbGraph graph) {
 		bGraph = graph;
 		group = new ButtonGroup();
@@ -48,13 +44,12 @@ public class ActionBar extends JPanel implements Serializable{
 		      }
 		}
 	}
-	
-	
-	/* Adds a button with the chosen icon.
+	/** Adds a button with the chosen icon.
 	 * Icons are stored in the src folder and the method
 	 * access them by using a String array with the path.
 	 * The amount of paths AND icons determines how many
-	 * buttons are added.*/
+	 * buttons are added.
+	 **/
 	public void add(final ImageIcon  n) {
 		JButton button = new JButton();
 		
@@ -72,13 +67,10 @@ public class ActionBar extends JPanel implements Serializable{
 					}
 					i++;
 				}
-				System.out.print(buttonName);
 				if(buttonName == "SAVE"){
-					//TODO: Add functionality.
-					SaveFrame save = new SaveFrame(bGraph);
+					new SaveFrame(bGraph);
 				} else if(buttonName == "OPEN"){
-					//bGraph.loadComponents("testfile.dat");
-					LoadFrame load = new LoadFrame(bGraph, gPanel);
+					new LoadFrame(bGraph, gPanel);
 					gPanel.repaint();
 				}
 			}
@@ -86,16 +78,11 @@ public class ActionBar extends JPanel implements Serializable{
 		group.add(button);
 		add(button);
 	}
-	
-	/* Used by GraphPanel to give this class access to the GraphPanel.
+	/** Used by GraphPanel to give this class access to the GraphPanel.
 	 * This is done so ActionBar class can call repaint() to
-	 * construct the loaded data.*/
+	 * construct the loaded data.
+	 **/
 	public void setGraphPanel(GraphPanel g){
 		gPanel = g;
 	}
-	
-
-	public static final int FRAME_WIDTH = 600;
-	public static final int FRAME_HEIGHT = 400;
-
 }

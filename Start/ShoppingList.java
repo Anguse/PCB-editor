@@ -9,28 +9,24 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-
+/**
+ * The class for the shoppinglist in the PCBGraphEditor
+ */
 public class ShoppingList extends JPanel{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3495881061634047648L;
 	private HashMap<Integer, String> hmn;
 	private HashMap<Integer, Integer> hmv;
 	private PcbGraph gGraph;
 	private DefaultListModel<String> model;
 	private List<String> indexList;
-	JList<String> list;
-	
+	JList<String> list;	
 	/**The ShoppingList class creates a JList, ArrayList and 2 HashMaps.
-	 * The ArrayList and HashMaps are used to track the amount of components used.*/
-	
+	 * The ArrayList and HashMaps are used to track the amount of components used.*/	
 	public ShoppingList(PcbGraph g){
 		hmn = new HashMap<Integer, String>();
 		hmv = new HashMap<Integer, Integer>();
 		indexList = new ArrayList<String>();
-		gGraph = g;
+		setGraph(g);
 		list = new JList<String>(model = new DefaultListModel<>());
 		list.setBounds(60, 60, 30, 60);
 		list.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -39,8 +35,6 @@ public class ShoppingList extends JPanel{
 			
 		add(list);
 	}
-	
-	
 	/**Adds an item to the HashMaps for saving, ArrayList to track index and
 	 * to the JList model to display the items. If there is already a item of the same name,
 	 * addItem will increment the value in the hmv HashMap and set the text in the JList accordingly.*/
@@ -75,24 +69,19 @@ public class ShoppingList extends JPanel{
 			hmv.put(item.hashCode(), hmv.get(item.hashCode())-1);
 		}
 		return item;
-	}
-	
+	}	
 	public HashMap<Integer, String> getHmn(){
 		return hmn;
-	}
-	
+	}	
 	public HashMap<Integer, Integer> getHmv(){
 		return hmv;
-	}
-	
+	}	
 	public ArrayList<String> getIndexList(){
 		return (ArrayList<String>) indexList;
-	}
-	
+	}	
 	public DefaultListModel<String> getModel(){
 		return model;
 	}
-	
 	/**Updates the shopping list. This method is called when loading a file. It is important that the HashMaps and the
 	 * ArrayList matches.
 	 * */
@@ -117,5 +106,17 @@ public class ShoppingList extends JPanel{
 				this.addItem(name);
 			}
 		}
+	}
+	/**
+	 * @return the gGraph
+	 */
+	public PcbGraph getGraph() {
+		return gGraph;
+	}
+	/**
+	 * @param gGraph the gGraph to set
+	 */
+	public void setGraph(PcbGraph gGraph) {
+		this.gGraph = gGraph;
 	}
 }

@@ -2,21 +2,23 @@ package Start;
 
 import java.awt.*;
 import java.awt.geom.*;
-import java.io.IOException;
 import java.util.*;
 import javax.swing.*;
-
+/***
+ * A class for the toolbar in the PCBGraphEditor
+ */
 public class ToolBar extends JPanel {
-
+	private ButtonGroup group;
+	private static final int BUTTON_SIZE = 10;	//Original size: 20
+	private static final int OFFSET = 4;
+	private static final long serialVersionUID = 8909672622403868517L;
 	private final static Color[] nodeColors = { Color.BLACK, Color.WHITE, Color.BLUE};
 	private String[] names = {"AND", "OR", "NOT"};
-
 	public ToolBar(PcbGraph graph) {
 		group = new ButtonGroup();
 		for (Color c : nodeColors)
 			add(new CircleNode(c));
 	}
-
 	public Color getSelectedCircleNodeColor() {
 		Enumeration<AbstractButton> e = group.getElements();
 		int i = 0;
@@ -29,7 +31,6 @@ public class ToolBar extends JPanel {
 		}
 		return null;
 	}
-
 	public void add(final CircleNode n) {
 		JToggleButton button = new JToggleButton(new Icon() {
 			public int getIconHeight() {
@@ -59,12 +60,17 @@ public class ToolBar extends JPanel {
 		group.add(button);
 		add(button);
 	}
-	
-
-
-	private ButtonGroup group;
-
-	private static final int BUTTON_SIZE = 10;	//Original size: 20
-	private static final int OFFSET = 4;
+	/**
+	 * @return the names
+	 */
+	public String[] getNames() {
+		return names;
+	}
+	/**
+	 * @param names the names to set
+	 */
+	public void setNames(String[] names) {
+		this.names = names;
+	}
 }
 
